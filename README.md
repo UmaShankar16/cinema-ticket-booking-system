@@ -78,8 +78,6 @@ View Booking
 ### OOP Concepts Used
 
 ```markdown
-## OOP Concepts Used
-
 - Classes and Objects
 - Encapsulation
 - Composition
