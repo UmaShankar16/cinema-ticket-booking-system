@@ -100,7 +100,7 @@ The customer-side booking flow is implemented using Core Java.
 ```
 ## Future Improvements
 
-- Staff management module
+- Admin management module
 - Database integration
 - Spring Boot backend
 - REST APIs

@@ -22,6 +22,7 @@ public class Cine {
         MovieManager movieManager = new MovieManager();
         BookingManager bookingManager = new BookingManager();
         UserManager userManager = new UserManager();
+        AdminManager adminManager = new AdminManager();
         loadSampleData(
                 cinemaHallManager,
                 screenManager,
@@ -34,7 +35,7 @@ public class Cine {
         {
             System.out.println("========== Cinema Ticket Booking System ==========");
             System.out.println("1. Customer");
-            System.out.println("2. Staff");
+            System.out.println("2. Admin");
             System.out.println("3. Exit");
             System.out.println("Enter your choice: ");
             int choice = sc.nextInt();
@@ -87,7 +88,50 @@ public class Cine {
                         System.out.println("Invalid Choice");
                     }
                     break;
-                case 2: System.out.println("Staff Selected");
+                case 2: System.out.println("========== Admin ==========");
+                    System.out.println("1. Register");
+                    System.out.println("2. Login");
+                    System.out.println("3. Exit");
+                    System.out.println("Enter your choice: ");
+                    int y = sc.nextInt();
+                    sc.nextLine();
+                    if(y==1)
+                    {
+                        System.out.println("Enter Cinema Hall: ");
+                        String hall = sc.nextLine();
+                        System.out.println("Enter Proper Location: ");
+                        String location = sc.nextLine();
+                        System.out.println("Enter Password: ");
+                        String password = sc.nextLine();
+                        Admin admin = new Admin(hall,location,password);
+                        if(adminManager.addStaff(admin))
+                        {
+                            System.out.println("Registered Successfully");
+
+                        }
+                        else{
+                            System.out.println("Already present");
+                        }
+                    } else if(y==2) {
+                        System.out.println("Enter Cinema Hall: ");
+                        String hall = sc.nextLine();
+                        System.out.println("Enter Proper Location: ");
+                        String location = sc.nextLine();
+                        System.out.println("Enter Password: ");
+                        String password = sc.nextLine();
+                        Admin admin = new Admin(hall,location,password);
+                        if(adminManager.loginStaff(admin))
+                        {
+                            System.out.println("Successfully Login");
+
+                        }
+                        else{
+                            System.out.println("Admin not found");
+                        }
+                    }
+                    else{
+                        System.out.println("Invalid choice");
+                    }
                     break;
                 case 3: System.out.println("Thank You");
                     sc.close();
