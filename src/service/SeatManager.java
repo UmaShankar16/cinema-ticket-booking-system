@@ -17,7 +17,6 @@ public class SeatManager {
         }
         return screen.getSeats().add(seat);
     }
-
     public boolean deleteSeat(Screen screen,int seatNo,String seatRow)
     {
         Seat foundSeat=null;
@@ -38,7 +37,6 @@ public class SeatManager {
         }
         return screen.getSeats().remove(foundSeat);
     }
-
     public boolean updateSeatNumber(Screen screen,int oldSeatNo,int newSeatNo, String row)
     {
         Seat foundSeat=null;

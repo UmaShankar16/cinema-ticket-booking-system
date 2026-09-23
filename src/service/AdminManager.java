@@ -13,7 +13,7 @@ public class AdminManager {
         admins = new ArrayList<>();
     }
 
-    public boolean addStaff(Admin admin)
+    public boolean addAdmin(Admin admin)
     {
         for(Admin admin1 : admins)
         {
@@ -28,7 +28,7 @@ public class AdminManager {
         return true;
     }
 
-    public boolean loginStaff(Admin admin)
+    public boolean loginAdmin(Admin admin)
     {
         for(Admin admin1 : admins)
         {

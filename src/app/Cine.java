@@ -104,10 +104,11 @@ public class Cine {
                         System.out.println("Enter Password: ");
                         String password = sc.nextLine();
                         Admin admin = new Admin(hall,location,password);
-                        if(adminManager.addStaff(admin))
+                        if(adminManager.addAdmin(admin))
                         {
                             System.out.println("Registered Successfully");
-
+                            adminMenu(sc,admin,cinemaHallManager,movieManager,screenManager,
+                                    showManager,seatManager);
                         }
                         else{
                             System.out.println("Already present");
@@ -120,10 +121,11 @@ public class Cine {
                         System.out.println("Enter Password: ");
                         String password = sc.nextLine();
                         Admin admin = new Admin(hall,location,password);
-                        if(adminManager.loginStaff(admin))
+                        if(adminManager.loginAdmin(admin))
                         {
                             System.out.println("Successfully Login");
-
+                            adminMenu(sc,admin,cinemaHallManager,movieManager,screenManager,
+                                    showManager,seatManager);
                         }
                         else{
                             System.out.println("Admin not found");
@@ -355,6 +357,400 @@ public class Cine {
                 case 3:
                     return;
                 default: System.out.println("Invalid Choice");
+            }
+        }
+    }
+    private static void adminMenu(
+            Scanner sc,
+            Admin admin,
+            CinemaHallManager cinemaHallManager,
+            MovieManager movieManager,
+            ScreenManager screenManager,
+            ShowManager showManager,
+            SeatManager seatManager
+    )
+    {
+        while(true)
+        {
+            System.out.println("======= Admin Menu =======");
+            System.out.println("1. Movie");
+            System.out.println("2. Screen");
+            System.out.println("3. Seat");
+            System.out.println("4. Show");
+            System.out.println("5. Back");
+            int x = sc.nextInt();
+            sc.nextLine();
+            CinemaHall hall = (CinemaHall) cinemaHallManager.searchByNameAndLocation(admin.getCinemaHallName(),
+                    admin.getCinemaHallLocation());
+            if(hall == null)
+            {
+                System.out.println("Cinema Hall Not Found");
+                break;
+            }
+            if(x == 1)
+            {
+                System.out.println("1. Add Movie");
+                System.out.println("2. Delete Movie");
+                System.out.println("3. Update Movie");
+                System.out.println("4. Back");
+                int choice = sc.nextInt();
+                sc.nextLine();
+                switch(choice)
+                {
+                    case 1: System.out.println("Enter Movie Title: ");
+                        String movieName = sc.nextLine();
+                        System.out.println("Enter Production House: ");
+                        String prodHse = sc.nextLine();
+                        System.out.println("Enter Producer: ");
+                        String prod = sc.nextLine();
+                        System.out.println("Enter Director: ");
+                        String director = sc.nextLine();
+                        System.out.println("Enter Language: ");
+                        String lang = sc.nextLine();
+                        System.out.println("Enter Duration(hours): ");
+                        long hour = sc.nextLong();
+                        System.out.println("Enter Duration(minutes): ");
+                        long minutes = sc.nextLong();
+                        sc.nextLine();
+                        Duration duration = Duration.ofHours(hour).plusMinutes(minutes);
+                        System.out.println("Enter Genre: ");
+                        String genre = sc.nextLine();
+                        Movie movie = new Movie(movieName,prodHse,prod,director,lang,duration,genre);
+                        if(movieManager.addMovie(movie))
+                        {
+                            System.out.println("Added Successfully");
+                        }
+                        else{
+                            System.out.println("Not Added");
+                        }
+                        break;
+                    case 2: System.out.println("Enter Movie Title: ");
+                        String title = sc.nextLine();
+                        if(movieManager.deleteMovie(title))
+                        {
+                            System.out.println("Deleted Successfully");
+                        }
+                        else{
+                            System.out.println("Not Found");
+                        }
+                        break;
+                    case 3:System.out.println("1. Update Movie Title");
+                        System.out.println("2. Update Movie Production House");
+                        System.out.println("3. Update Movie Producer");
+                        System.out.println("4. Update Movie Director");
+                        System.out.println("5. Update Movie Language");
+                        System.out.println("6. Update Movie Duration");
+                        System.out.println("7. Update Movie Genre");
+                        System.out.println("8. Back");
+                        System.out.println("Enter Your Choice:");
+                        int select = sc.nextInt();
+                        sc.nextLine();
+                        if(select == 1)
+                        {
+                            System.out.println("Enter Movie Title: ");
+                            String oldTitle = sc.nextLine();
+                            System.out.println("Enter New Movie Title: ");
+                            String newTitle = sc.nextLine();
+                            if(movieManager.updateMovieTitle(newTitle,oldTitle))
+                            {
+                                System.out.println("Updated");
+                            }
+                            else{
+                                System.out.println("Not Updated");
+                            }
+                        }
+                        else if(select == 2)
+                        {
+                            System.out.println("Enter Movie Title: ");
+                            String title1 = sc.nextLine();
+                            System.out.println("Enter New Production House: ");
+                            String newProdHsc = sc.nextLine();
+                            System.out.println("Enter old Production House: ");
+                            String oldProdHsc = sc.nextLine();
+                            if(movieManager.updateMovieProductionHouse(title1,newProdHsc,oldProdHsc))
+                            {
+                                System.out.println("Updated");
+                            }
+                            else{
+                                System.out.println("Not Updated");
+                            }
+                        }
+                        else if(select == 3)
+                        {
+                            System.out.println("Enter Movie Title: ");
+                            String title2 = sc.nextLine();
+                            System.out.println("Enter New Producer: ");
+                            String newProd = sc.nextLine();
+                            System.out.println("Enter old Producer: ");
+                            String oldProd = sc.nextLine();
+                            if(movieManager.updateMovieProducer(title2,newProd,oldProd))
+                            {
+                                System.out.println("Updated");
+                            }
+                            else{
+                                System.out.println("Not Updated");
+                            }
+                        }
+                        else if(select == 4)
+                        {
+                            System.out.println("Enter Movie Title: ");
+                            String title3 = sc.nextLine();
+                            System.out.println("Enter New director: ");
+                            String newDirector = sc.nextLine();
+                            System.out.println("Enter old director: ");
+                            String oldDirector = sc.nextLine();
+                            if(movieManager.updateMovieDirector(title3,newDirector,oldDirector))
+                            {
+                                System.out.println("Updated");
+                            }
+                            else{
+                                System.out.println("Not Updated");
+                            }
+                        }
+                        else if(select == 5)
+                        {
+                            System.out.println("Enter Movie Title: ");
+                            String title4 = sc.nextLine();
+                            System.out.println("Enter New Language: ");
+                            String newLang = sc.nextLine();
+                            System.out.println("Enter old Language: ");
+                            String oldLang = sc.nextLine();
+                            if(movieManager.updateMovieLanguage(title4,newLang,oldLang))
+                            {
+                                System.out.println("Updated");
+                            }
+                            else{
+                                System.out.println("Not Updated");
+                            }
+                        }
+                        else if(select == 6)
+                        {
+                            System.out.println("Enter Movie Title: ");
+                            String title5 = sc.nextLine();
+                            System.out.println("Enter old Duration(hours): ");
+                            long hours = sc.nextLong();
+                            System.out.println("Enter old Duration(minutes): ");
+                            long minute = sc.nextLong();
+                            sc.nextLine();
+                            Duration duration1 = Duration.ofHours(hours).plusMinutes(minute);
+                            System.out.println("Enter new Duration(hours): ");
+                            long hours1 = sc.nextLong();
+                            System.out.println("Enter new Duration(minutes): ");
+                            long minutes1 = sc.nextLong();
+                            sc.nextLine();
+                            Duration duration2 = Duration.ofHours(hours1).plusMinutes(minutes1);
+                            if(movieManager.updateMovieDuration(title5,duration1,duration2))
+                            {
+                                System.out.println("Updated");
+                            }
+                            else{
+                                System.out.println("Not Updated");
+                            }
+                        }
+                        else if(select == 7)
+                        {
+                            System.out.println("Enter Movie Title: ");
+                            String title6 = sc.nextLine();
+                            System.out.println("Enter New Genre: ");
+                            String newGenre = sc.nextLine();
+                            System.out.println("Enter old Genre: ");
+                            String oldGenre = sc.nextLine();
+                            if(movieManager.updateMovieGenre(title6,oldGenre,newGenre))
+                            {
+                                System.out.println("Updated");
+                            }
+                            else{
+                                System.out.println("Not Updated");
+                            }
+                        }
+                        else if(select == 8)
+                        {
+                            break;
+                        }
+                        else {
+                            System.out.println("Invalid Choice");
+                        }
+                        break;
+                    default:
+                        System.out.println("Invalid Choice");
+                }
+            }
+            else if(x==2)
+            {
+                System.out.println("1. Add Screen");
+                System.out.println("2. Delete Screen");
+                System.out.println("3. Update Screen");
+                System.out.println("4. Back");
+                int choice = sc.nextInt();
+                sc.nextLine();
+                switch (choice)
+                {
+                    case 1: System.out.println("Enter Screen no: ");
+                        int screenNo = sc.nextInt();
+                        sc.nextLine();
+                        Screen screen = new Screen(screenNo);
+                        System.out.println("Enter the no. of rows: ");
+                        int rowNo = sc.nextInt();
+                        sc.nextLine();
+                        System.out.println("Enter the no. of seats each row contains: ");
+                        int n = sc.nextInt();
+                        sc.nextLine();
+                        for(int i=0;i<rowNo;i++)
+                        {
+                            String row = String.valueOf((char)('A'+i));
+                            for(int j=1;j<=n;j++)
+                            {
+                                Seat seat = new Seat("Regular",row,j);
+                                screen.getSeats().add(seat);
+                            }
+                        }
+                        if(screenManager.addScreen(hall,screen))
+                        {
+                            System.out.println("Added Successfully");
+                        }
+                        else{
+                            System.out.println("Not Successful");
+                        }
+                        break;
+                    case 2:
+                        System.out.println("Enter Screen No: ");
+                        int num = sc.nextInt();
+                        if(screenManager.deleteScreen(hall,num))
+                        {
+                            System.out.println("Deleted Successfully");
+                        }
+                        else{
+                            System.out.println("Not deleted");
+                        }
+                        break;
+                    case 3: System.out.println("Enter old Screen No: ");
+                        int oldNum = sc.nextInt();
+                        System.out.println("Enter new Screen No: ");
+                        int newNum = sc.nextInt();
+                        if(screenManager.updateScreen(hall,oldNum,newNum))
+                        {
+                            System.out.println("Updated Successfully");
+                        }
+                        else{
+                            System.out.println("Not updated");
+                        }
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        System.out.println("Invalid Choice");
+                }
+            }
+            else if(x==3)
+            {
+                System.out.println("1. Add Seat");
+                System.out.println("2. Delete Seat");
+                System.out.println("3. Update Seat No");
+                System.out.println("4. Update Seat Row");
+                System.out.println("5. Update Seat Type");
+                System.out.println("6. Back");
+                int choice = sc.nextInt();
+                sc.nextLine();
+                System.out.println("Enter Screen No in which you want to perform this operation: ");
+                int no =sc.nextInt();
+                Screen selectedScreen = null;
+                for(Screen screen: hall.getScreen())
+                {
+                    if(screen.getScreenNo()==no)
+                    {
+                        selectedScreen = screen;
+                        break;
+                    }
+                }
+                if(selectedScreen == null)
+                {
+                    System.out.println("Screen not found");
+                }
+                switch (choice)
+                {
+                    case 1: System.out.println("Enter seat type: ");
+                        String type = sc.nextLine();
+                        System.out.println("Enter seat Row: ");
+                        String row = sc.nextLine();
+                        System.out.println("Enter seat No: ");
+                        int num1 = sc.nextInt();
+                        sc.nextLine();
+                        Seat seat = new Seat(type,row,num1);
+                        if(seatManager.addSeat(selectedScreen,seat))
+                        {
+                            System.out.println("Added");
+                        }
+                        else {
+                            System.out.println("Not added");
+                        }
+                        break;
+                    case 2:
+                        System.out.println("Enter seat Row: ");
+                        String row1 = sc.nextLine();
+                        System.out.println("Enter seat No: ");
+                        int n = sc.nextInt();
+                        sc.nextLine();
+                        if(seatManager.deleteSeat(selectedScreen,n,row1))
+                        {
+                            System.out.println("Deleted");
+                        }
+                        else {
+                            System.out.println("Not Deleted");
+                        }
+                        break;
+                    case 3:
+                        System.out.println("Enter seat Row: ");
+                        String row2 = sc.nextLine();
+                        System.out.println("Enter old seat No: ");
+                        int oldSeat = sc.nextInt();
+                        sc.nextLine();
+                        System.out.println("Enter new seat No: ");
+                        int newSeat = sc.nextInt();
+                        sc.nextLine();
+                        if(seatManager.updateSeatNumber(selectedScreen,oldSeat,newSeat,row2))
+                        {
+                            System.out.println("Updated");
+                        }
+                        else {
+                            System.out.println("Not Updated");
+                        }
+                        break;
+                    case 4:
+                        System.out.println("Enter old seat Row: ");
+                        String oldRow = sc.nextLine();
+                        System.out.println("Enter new Row: ");
+                        String newRow = sc.nextLine();
+                        if(seatManager.updateSeatByRow(selectedScreen,oldRow,newRow))
+                        {
+                            System.out.println("Updated");
+                        }
+                        else {
+                            System.out.println("Not Updated");
+                        }
+                        break;
+                    case 5:
+                        System.out.println("Enter seat Row: ");
+                        String row3 = sc.nextLine();
+                        System.out.println("Enter new Type: ");
+                        String newType = sc.nextLine();
+                        System.out.println("Enter old Type: ");
+                        String oldType = sc.nextLine();
+                        System.out.println("Enter seat No: ");
+                        int y = sc.nextInt();
+                        sc.nextLine();
+                        if(seatManager.updateSeatByType(selectedScreen,y,newType,oldType,row3))
+                        {
+                            System.out.println("Updated");
+                        }
+                        else {
+                            System.out.println("Not Updated");
+                        }
+                        break;
+                    case 6:
+                        break;
+                    default:
+                        System.out.println("Invalid Choice");
+                }
             }
         }
     }

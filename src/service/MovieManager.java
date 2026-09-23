@@ -35,7 +35,6 @@ public class MovieManager {
         }
         return movies.remove(foundMovie);
     }
-
     public boolean updateMovieTitle(String newMovieTitle,String oldMovieTitle)
     {
         Movie foundMovie=null;
@@ -100,6 +99,28 @@ public class MovieManager {
             return false;
         }
         foundMovie.setProducer(newProducer);
+        return true;
+    }
+    public boolean updateMovieDirector(String movieTitle,String newDirector,String oldDirector)
+    {
+        Movie foundMovie=null;
+        if(oldDirector.equalsIgnoreCase(newDirector))
+        {
+            return false;
+        }
+        for(Movie movie : movies)
+        {
+            if(movie.getTitle().equalsIgnoreCase(movieTitle))
+            {
+                foundMovie = movie;
+                break;
+            }
+        }
+        if(foundMovie==null)
+        {
+            return false;
+        }
+        foundMovie.setDirector(newDirector);
         return true;
     }
     public boolean updateMovieLanguage(String movieTitle,String oldLanguage,String newLanguage)
