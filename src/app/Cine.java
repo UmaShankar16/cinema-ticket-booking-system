@@ -6,6 +6,8 @@ import service.*;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -751,6 +753,274 @@ public class Cine {
                     default:
                         System.out.println("Invalid Choice");
                 }
+            }
+            else if(x==4)
+            {
+                Screen selectedScreen = null;
+                System.out.println("Enter Screen no: ");
+                int n = sc.nextInt();
+                for(Screen screen: hall.getScreen())
+                {
+                    if(screen.getScreenNo()==n)
+                    {
+                        selectedScreen = screen;
+                        break;
+                    }
+                }
+                if(selectedScreen == null)
+                {
+                    System.out.println("Screen not found");
+                    break;
+                }
+                System.out.println("1. Add Show");
+                System.out.println("2. Delete Show");
+                System.out.println("3. Update Show");
+                System.out.println("4. Back");
+                System.out.println("Enter your choice: ");
+                int num = sc.nextInt();
+                sc.nextLine();
+                switch (num)
+                {
+                    case 1: System.out.println("Enter movie title: ");
+                        String movieTitle = sc.nextLine();
+                        Movie title = movieManager.findMovie(movieTitle);
+                        if(title == null)
+                        {
+                            System.out.println("Movie not found");
+                            break;
+                        }
+                        System.out.println("Enter show date(in dd-MM-yy): ");
+                        String userInput = sc.nextLine();
+                        LocalDate date = null;
+                        LocalTime time = null;
+                        try
+                        {
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy");
+                            date = LocalDate.parse(userInput,formatter);
+                        }
+                        catch(DateTimeParseException e){
+                            System.out.println("Invalid format");
+                        }
+                        System.out.println("Enter show time(in HH:mm): ");
+                        String user = sc.nextLine();
+                        try{
+                            DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:mm");
+                            time = LocalTime.parse(user, formatter1);
+                        }
+                        catch(DateTimeParseException e){
+                            System.out.println("Invalid format");
+                        }
+                        Show show = new Show(movieTitle,date,time);
+                        if(showManager.addShow(selectedScreen,show))
+                        {
+                            System.out.println("Added Successfully");
+                        }
+                        else {
+                            System.out.println("Not Added");
+                        }
+                        break;
+                    case 2: System.out.println("Enter movie title: ");
+                        String movie = sc.nextLine();
+                        Movie film = movieManager.findMovie(movie);
+                        if(film == null)
+                        {
+                            System.out.println("Movie not found");
+                            break;
+                        }
+                        System.out.println("Enter show date(in dd-MM-yy): ");
+                        String userInput1 = sc.nextLine();
+                        LocalDate date1 = null;
+                        LocalTime time1 = null;
+                        try
+                        {
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy");
+                            date1 = LocalDate.parse(userInput1,formatter);
+                        }
+                        catch(DateTimeParseException e){
+                            System.out.println("Invalid format");
+                        }
+                        System.out.println("Enter show time(in HH:mm): ");
+                        String user1 = sc.nextLine();
+                        try{
+                            DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:mm");
+                            time1 = LocalTime.parse(user1, formatter1);
+                        }
+                        catch(DateTimeParseException e){
+                            System.out.println("Invalid format");
+                        }
+                        if(showManager.deleteShow(selectedScreen,movie,date1,time1))
+                        {
+                            System.out.println("Deleted");
+                        }
+                        else {
+                            System.out.println("Not Deleted");
+                        }
+                        break;
+                    case 3: System.out.println("1. Update Movie Title");
+                        System.out.println("2. Update Show Date");
+                        System.out.println("3. Update Show Time");
+                        System.out.println("4. Back");
+                        System.out.println("Enter your choice: ");
+                        int num1 = sc.nextInt();
+                        sc.nextLine();
+                        switch (num1)
+                        {
+                            case 1:System.out.println("Enter old movie title: ");
+                                String oldMovie = sc.nextLine();
+                                Movie film1 = movieManager.findMovie(oldMovie);
+                                if(film1 == null)
+                                {
+                                    System.out.println("Movie not found");
+                                    break;
+                                }System.out.println("Enter new movie title: ");
+                                String newMovie = sc.nextLine();
+                                Movie film2 = movieManager.findMovie(newMovie);
+                                if(film2 == null)
+                                {
+                                    System.out.println("Movie not found.First update movie in Movie section");
+                                    break;
+                                }
+                                System.out.println("Enter show date(in dd-MM-yy): ");
+                                String userInput2 = sc.nextLine();
+                                LocalDate date2 = null;
+                                LocalTime time2 = null;
+                                try
+                                {
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy");
+                                    date2 = LocalDate.parse(userInput2,formatter);
+                                }
+                                catch(DateTimeParseException e){
+                                    System.out.println("Invalid format");
+                                }
+                                System.out.println("Enter show time(in HH:mm): ");
+                                String user2 = sc.nextLine();
+                                try{
+                                    DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:mm");
+                                    time2 = LocalTime.parse(user2, formatter1);
+                                }
+                                catch(DateTimeParseException e){
+                                    System.out.println("Invalid format");
+                                }
+                                if(showManager.updateShowMovie(selectedScreen,oldMovie,newMovie,date2,time2))
+                                {
+                                    System.out.println("Updated");
+                                }
+                                else {
+                                    System.out.println("Not updated");
+                                }
+                                break;
+                            case 2: LocalDate newDate = null;
+                                LocalDate oldDate = null;
+                                LocalTime time3 = null;
+                                System.out.println("Enter movie title: ");
+                                String movie1 = sc.nextLine();
+                                Movie title1 = movieManager.findMovie(movie1);
+                                if(title1 == null)
+                                {
+                                    System.out.println("Movie not found");
+                                    break;
+                                }
+                                System.out.println("Enter old show date(in dd-MM-yy): ");
+                                String oldUserInput = sc.nextLine();
+                                try
+                                {
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy");
+                                    oldDate = LocalDate.parse(oldUserInput,formatter);
+                                }
+                                catch(DateTimeParseException e){
+                                    System.out.println("Invalid format");
+                                }
+                                System.out.println("Enter new show date(in dd-MM-yy): ");
+                                String newUserInput = sc.nextLine();
+                                try
+                                {
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy");
+                                    newDate = LocalDate.parse(newUserInput,formatter);
+                                }
+                                catch(DateTimeParseException e){
+                                    System.out.println("Invalid format");
+                                }
+                                System.out.println("Enter show time(in HH:mm): ");
+                                String user3 = sc.nextLine();
+                                try{
+                                    DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:mm");
+                                    time3 = LocalTime.parse(user3, formatter1);
+                                }
+                                catch(DateTimeParseException e){
+                                    System.out.println("Invalid format");
+                                }
+                                if(showManager.updateShowDate(selectedScreen,movie1,newDate,oldDate,time3))
+                                {
+                                    System.out.println("Updated");
+                                }
+                                else {
+                                    System.out.println("Not updated");
+                                }
+                                break;
+                            case 3: LocalDate date3 = null;
+                                LocalTime newTime = null;
+                                LocalTime oldTime = null;
+                                System.out.println("Enter movie title: ");
+                                String movie2 = sc.nextLine();
+                                Movie title2 = movieManager.findMovie(movie2);
+                                if(title2 == null)
+                                {
+                                    System.out.println("Movie not found");
+                                    break;
+                                }
+                                System.out.println("Enter show date(in dd-MM-yy): ");
+                                String userInput3 = sc.nextLine();
+                                try
+                                {
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy");
+                                    date3 = LocalDate.parse(userInput3,formatter);
+                                }
+                                catch(DateTimeParseException e){
+                                    System.out.println("Invalid format");
+                                }
+                                System.out.println("Enter old show time(in HH:mm): ");
+                                String oldUser = sc.nextLine();
+                                try{
+                                    DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:mm");
+                                    oldTime = LocalTime.parse(oldUser, formatter1);
+                                }
+                                catch(DateTimeParseException e){
+                                    System.out.println("Invalid format");
+                                }
+                                System.out.println("Enter new show time(in HH:mm): ");
+                                String newUser = sc.nextLine();
+                                try{
+                                    DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:mm");
+                                    newTime = LocalTime.parse(newUser, formatter1);
+                                }
+                                catch(DateTimeParseException e){
+                                    System.out.println("Invalid format");
+                                }
+                                if(showManager.updateShowTime(selectedScreen,movie1,newTime,date3,oldTime))
+                                {
+                                    System.out.println("Updated");
+                                }
+                                else {
+                                    System.out.println("Not updated");
+                                }
+                                break;
+                            case 4:
+                                break;
+                            default:
+                                System.out.println("Invalid choice");
+                        }
+                    case 4:
+                        break;
+                    default:
+                        System.out.println("Invalid choice");
+                }
+            }
+            else if (x==5)
+            {
+                break;
+            }
+            else{
+                System.out.println("Invalid Choice");
             }
         }
     }

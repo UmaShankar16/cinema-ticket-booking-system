@@ -12,7 +12,6 @@ public class ShowManager {
     {
         return screen.getShows().add(show);
     }
-
     public boolean deleteShow(Screen screen, String movieTitle, LocalDate date, LocalTime time)
     {
         Show foundShow=null;
@@ -37,7 +36,6 @@ public class ShowManager {
         screen.getShows().remove(foundShow);
         return true;
     }
-
     public boolean updateShowMovie(Screen screen,String oldMovieTitle,String newMovieTitle,LocalDate date,LocalTime time)
     {
         Show foundShow=null;
