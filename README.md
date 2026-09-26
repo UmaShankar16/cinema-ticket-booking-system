@@ -18,6 +18,19 @@ Core Java and Object-Oriented Programming principles.
 - Prevent double booking of the same seats for the same show
 - view previous bookings
 
+### Admin Features
+
+- Admin registration and login
+- Admin access restricted to their assigned cinema hall
+- Add, delete, and update movies
+- Add, delete, and update screens
+- Automatic seat generation while creating a screen
+- Add, delete, and update individual seats
+- Manage seat type and seat row/number
+- Add, delete, and update shows
+- Schedule shows for available movies
+- Manage cinema hall screens, seats, movies, and shows
+
 ## Technologies Used
 - Core Java
 - Object-Oriented Programming
@@ -100,8 +113,6 @@ The customer-side booking flow is implemented using Core Java.
 ```
 ## Future Improvements
 
-- Admin management module
-- Database integration
 - Spring Boot backend
 - REST APIs
 - Payment integration
