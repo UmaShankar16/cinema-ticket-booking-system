@@ -996,7 +996,7 @@ public class Cine {
                                 catch(DateTimeParseException e){
                                     System.out.println("Invalid format");
                                 }
-                                if(showManager.updateShowTime(selectedScreen,movie1,newTime,date3,oldTime))
+                                if(showManager.updateShowTime(selectedScreen,movie2,newTime,date3,oldTime))
                                 {
                                     System.out.println("Updated");
                                 }
