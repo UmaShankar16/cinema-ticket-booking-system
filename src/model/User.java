@@ -1,6 +1,7 @@
 package model;
 
 public class User {
+    private int userId;
     private String name;
     private String phone;
 
@@ -8,6 +9,14 @@ public class User {
     {
         this.name=name;
         this.phone=phone;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getUserId() {
+        return userId;
     }
 
     public void setName(String name) {

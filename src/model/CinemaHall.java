@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CinemaHall {
+    private int hallId;
     private String cinemaHallName;
     private String location;
     private List<Screen> screen;
@@ -13,6 +14,14 @@ public class CinemaHall {
         this.cinemaHallName=cinemaHallName;
         this.location=location;
         screen = new ArrayList<>();
+    }
+    public void setHallId(int hallId)
+    {
+        this.hallId = hallId;
+    }
+
+    public int getHallId() {
+        return hallId;
     }
 
     public void setCinemaHallName(String cinemaHallName) {
@@ -32,7 +41,7 @@ public class CinemaHall {
     }
 
     public void setScreen(List<Screen> screenList) {
-        this.screen = screen;
+        this.screen = screenList;
     }
 
     public List<Screen> getScreen() {

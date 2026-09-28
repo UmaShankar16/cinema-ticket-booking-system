@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Booking {
+    private int bookingId;
     private User user;
     private Screen screen;
     private Show show;
@@ -15,6 +16,14 @@ public class Booking {
         this.show=show;
         this.screen=screen;
         this.seats = seats;
+    }
+
+    public void setBookingId(int bookingId) {
+        this.bookingId = bookingId;
+    }
+
+    public int getBookingId() {
+        return bookingId;
     }
 
     public void setUser(User user) {

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Show {
+    private int showId;
     private String movie;
     private LocalDate date;
     private LocalTime startTime;
@@ -13,6 +14,14 @@ public class Show {
         this.movie=movie;
         this.date=date;
         this.startTime=startTime;
+    }
+
+    public void setShowId(int showId) {
+        this.showId = showId;
+    }
+
+    public int getShowId() {
+        return showId;
     }
 
     public void setMovie(String movie) {

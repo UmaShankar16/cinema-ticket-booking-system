@@ -1,6 +1,7 @@
 package model;
 
 public class Admin {
+    private int adminId;
     private String cinemaHallName;
     private String cinemaHallLocation;
     private String password;
@@ -11,6 +12,14 @@ public class Admin {
         this.cinemaHallName = cinemaHallName;
         this.cinemaHallLocation = cinemaHallLocation;
         this.password = password;
+    }
+
+    public void setAdminId(int adminId) {
+        this.adminId = adminId;
+    }
+
+    public int getAdminId() {
+        return adminId;
     }
 
     public String getCinemaHallName() {

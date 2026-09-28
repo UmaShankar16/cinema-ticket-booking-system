@@ -1,6 +1,7 @@
 package model;
 
 public class Seat {
+    private int seatId;
     private String type;
     private String row;
     private int seatNo;
@@ -10,6 +11,14 @@ public class Seat {
         this.type=type;
         this.row=row;
         this.seatNo=seatNo;
+    }
+
+    public void setSeatId(int seatId) {
+        this.seatId = seatId;
+    }
+
+    public int getSeatId() {
+        return seatId;
     }
 
     public String getType() {

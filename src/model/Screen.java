@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Screen {
+    private int screenId;
     private int screenNo;
     private List<Seat> seats;
     private List<Show> shows;
@@ -13,6 +14,14 @@ public class Screen {
         this.screenNo=screenNo;
         this.seats=new ArrayList<>();
         this.shows=new ArrayList<>();
+    }
+
+    public void setScreenId(int screenId) {
+        this.screenId = screenId;
+    }
+
+    public int getScreenId() {
+        return screenId;
     }
 
     public void setScreenNo(int screenNo) {

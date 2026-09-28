@@ -42,15 +42,18 @@ public class CinemaHallManager {
         cinemaHalls.remove(foundHall);
         return true;
     }
-    public boolean updateCinemaHallLocation(String name,String newLocation)
+    public boolean updateCinemaHallLocation(CinemaHall hall,String newLocation)
     {
         CinemaHall foundHall = null;
-        for(CinemaHall hall : cinemaHalls)
+        for(CinemaHall hall1 : cinemaHalls)
         {
-            if(hall.getCinemaHallName().equalsIgnoreCase(name))
+            if(hall1.getCinemaHallName().equalsIgnoreCase(hall.getCinemaHallName()))
             {
-                foundHall=hall;
-                break;
+                if(hall1.getLocation().equalsIgnoreCase(hall.getLocation()))
+                {
+                    foundHall=hall1;
+                    break;
+                }
             }
         }
         if(foundHall==null)
@@ -60,15 +63,18 @@ public class CinemaHallManager {
         foundHall.setLocation(newLocation);
         return true;
     }
-    public boolean updateCinemaHallName(String oldName,String newName)
+    public boolean updateCinemaHallName(CinemaHall hall,String newName)
     {
         CinemaHall foundHall = null;
-        for(CinemaHall hall : cinemaHalls)
+        for(CinemaHall hall1 : cinemaHalls)
         {
-            if(hall.getCinemaHallName().equalsIgnoreCase(oldName))
+            if(hall1.getCinemaHallName().equalsIgnoreCase(hall.getCinemaHallName()))
             {
-                foundHall=hall;
-                break;
+                if(hall1.getLocation().equalsIgnoreCase(hall.getLocation()))
+                {
+                    foundHall=hall1;
+                    break;
+                }
             }
         }
         if(foundHall==null)
@@ -102,14 +108,14 @@ public class CinemaHallManager {
         }
         return searchedHall;
     }
-    public List<CinemaHall> searchByNameAndLocation(String hallName,String location)
+    public List<CinemaHall> searchByNameAndLocation(CinemaHall hall)
     {
         List<CinemaHall> searchedHall = new ArrayList<>();
-        for(CinemaHall hall : cinemaHalls)
+        for(CinemaHall hall1 : cinemaHalls)
         {
-            if(hall.getCinemaHallName().equalsIgnoreCase(hallName))
+            if(hall1.getCinemaHallName().equalsIgnoreCase(hall.getCinemaHallName()))
             {
-                if(hall.getLocation().equalsIgnoreCase(location))
+                if(hall1.getLocation().equalsIgnoreCase(hall.getLocation()))
                 {
                     searchedHall.add(hall);
                 }
