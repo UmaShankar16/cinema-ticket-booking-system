@@ -382,9 +382,9 @@ public class Cine {
             System.out.println("5. Back");
             int x = sc.nextInt();
             sc.nextLine();
-            CinemaHall hall = (CinemaHall) cinemaHallManager.searchByNameAndLocation(admin.getCinemaHallName(),
-                    admin.getCinemaHallLocation());
-            if(hall == null)
+            CinemaHall hall = new CinemaHall(admin.getCinemaHallName(),admin.getCinemaHallLocation());
+            CinemaHall hall1 = cinemaHallManager.searchByNameAndLocation(hall);
+            if(hall1 == null)
             {
                 System.out.println("Cinema Hall Not Found");
                 break;

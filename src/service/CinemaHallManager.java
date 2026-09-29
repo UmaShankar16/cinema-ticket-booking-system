@@ -1,126 +1,48 @@
 package service;
 
+import DAO.CinemaHallDAO;
 import model.CinemaHall;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CinemaHallManager {
-    private List<CinemaHall> cinemaHalls;
+    private CinemaHallDAO cinemaHallDAO;
 
     public CinemaHallManager()
     {
-        cinemaHalls = new ArrayList<>();
+        cinemaHallDAO = new CinemaHallDAO();
     }
 
-    public List<CinemaHall> getCinemaHalls() {
-        return cinemaHalls;
+    public List<CinemaHall> getAllCinemaHalls() {
+        return cinemaHallDAO.getAllCinemaHall();
     }
 
     public boolean addCinemaHall(CinemaHall cinemaHall)
     {
-        return cinemaHalls.add(cinemaHall);
+        return cinemaHallDAO.addCinemaHall(cinemaHall);
     }
     public boolean deleteCinemaHall(CinemaHall cinemaHall)
     {
-        CinemaHall foundHall = null;
-        for(CinemaHall hall : cinemaHalls)
-        {
-            if(hall.getCinemaHallName().equalsIgnoreCase(cinemaHall.getCinemaHallName()))
-            {
-                if (hall.getLocation().equalsIgnoreCase(cinemaHall.getLocation()))
-                {
-                    foundHall=hall;
-                    break;
-                }
-            }
-        }
-        if(foundHall==null)
-        {
-            return false;
-        }
-        cinemaHalls.remove(foundHall);
-        return true;
+        return cinemaHallDAO.deleteCinemaHall(cinemaHall);
     }
     public boolean updateCinemaHallLocation(CinemaHall hall,String newLocation)
     {
-        CinemaHall foundHall = null;
-        for(CinemaHall hall1 : cinemaHalls)
-        {
-            if(hall1.getCinemaHallName().equalsIgnoreCase(hall.getCinemaHallName()))
-            {
-                if(hall1.getLocation().equalsIgnoreCase(hall.getLocation()))
-                {
-                    foundHall=hall1;
-                    break;
-                }
-            }
-        }
-        if(foundHall==null)
-        {
-            return false;
-        }
-        foundHall.setLocation(newLocation);
-        return true;
+        return cinemaHallDAO.updateCinemaHallLocation(hall,newLocation);
     }
     public boolean updateCinemaHallName(CinemaHall hall,String newName)
     {
-        CinemaHall foundHall = null;
-        for(CinemaHall hall1 : cinemaHalls)
-        {
-            if(hall1.getCinemaHallName().equalsIgnoreCase(hall.getCinemaHallName()))
-            {
-                if(hall1.getLocation().equalsIgnoreCase(hall.getLocation()))
-                {
-                    foundHall=hall1;
-                    break;
-                }
-            }
-        }
-        if(foundHall==null)
-        {
-            return false;
-        }
-        foundHall.setCinemaHallName(newName);
-        return true;
+        return cinemaHallDAO.updateCinemaHallName(hall,newName);
     }
     public List<CinemaHall> searchByHallName(String hallName)
     {
-        List<CinemaHall> searchedHall = new ArrayList<>();
-        for(CinemaHall hall: cinemaHalls)
-        {
-            if(hall.getCinemaHallName().equalsIgnoreCase(hallName))
-            {
-                searchedHall.add(hall);
-            }
-        }
-        return searchedHall;
+        return cinemaHallDAO.searchCinemaHallByName(hallName);
     }
     public List<CinemaHall> searchByLocation(String location)
     {
-        List<CinemaHall> searchedHall = new ArrayList<>();
-        for(CinemaHall hall: cinemaHalls)
-        {
-            if(hall.getLocation().equalsIgnoreCase(location))
-            {
-                searchedHall.add(hall);
-            }
-        }
-        return searchedHall;
+        return cinemaHallDAO.searchCinemaHallByLocation(location);
     }
-    public List<CinemaHall> searchByNameAndLocation(CinemaHall hall)
+    public CinemaHall searchByNameAndLocation(CinemaHall hall)
     {
-        List<CinemaHall> searchedHall = new ArrayList<>();
-        for(CinemaHall hall1 : cinemaHalls)
-        {
-            if(hall1.getCinemaHallName().equalsIgnoreCase(hall.getCinemaHallName()))
-            {
-                if(hall1.getLocation().equalsIgnoreCase(hall.getLocation()))
-                {
-                    searchedHall.add(hall);
-                }
-            }
-        }
-        return searchedHall;
+        return cinemaHallDAO.searchCinemaHallByNameAndLocation(hall);
     }
 }

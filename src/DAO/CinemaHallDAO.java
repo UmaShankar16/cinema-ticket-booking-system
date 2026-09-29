@@ -175,9 +175,9 @@ public class CinemaHallDAO {
         }
         return foundHall;
     }
-    public ArrayList<CinemaHall> searchCinemaHallByNameAndLocation(CinemaHall hall)
+    public CinemaHall searchCinemaHallByNameAndLocation(CinemaHall hall)
     {
-        ArrayList<CinemaHall> foundHall = new ArrayList<>();
+        CinemaHall hall1 = null;
         String sql = """
                 SELECT * FROM cinemahall
                 WHERE LOWER(cinemahall_name) = LOWER(?)
@@ -193,15 +193,14 @@ public class CinemaHallDAO {
 
             try(ResultSet resultSet = statement.executeQuery())
             {
-                while(resultSet.next())
+                if (resultSet.next())
                 {
                     int hallId = resultSet.getInt("hall_id");
                     String name = resultSet.getString("cinemahall_name");
                     String location = resultSet.getString("cinemahall_location");
 
-                    CinemaHall hall1 = new CinemaHall(name,location);
+                    hall1 = new CinemaHall(name,location);
                     hall1.setHallId(hallId);
-                    foundHall.add(hall1);
                 }
             }
         }
@@ -209,6 +208,37 @@ public class CinemaHallDAO {
         {
             e.printStackTrace();
         }
-        return foundHall;
+        return hall1;
+    }
+    public ArrayList<CinemaHall> getAllCinemaHall()
+    {
+        ArrayList<CinemaHall> allHalls = new ArrayList<>();
+        String sql = """
+                SELECT * FROM cinemahall
+                """;
+        try(
+                Connection connection = DBConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                )
+        {
+            try(ResultSet resultSet = statement.executeQuery())
+            {
+                while (resultSet.next())
+                {
+                    int hallId = resultSet.getInt("hall_id");
+                    String name = resultSet.getString("cinemahall_name");
+                    String  location = resultSet.getString("cinemahall_location");
+
+                    CinemaHall hall = new CinemaHall(name,location);
+                    hall.setHallId(hallId);
+                    allHalls.add(hall);
+                }
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return allHalls;
     }
 }
