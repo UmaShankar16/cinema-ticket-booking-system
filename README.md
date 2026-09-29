@@ -40,31 +40,86 @@ Core Java and Object-Oriented Programming principles.
 - LocalDate
 - LocalTime
 
+## Database Integration
+
+CineBook uses **PostgreSQL** for persistent data storage and **JDBC** for connecting the Java application with the database.
+
+### Technologies Used
+
+- Java
+- JDBC
+- PostgreSQL
+- DBeaver
+- IntelliJ IDEA
+
+### Database Structure
+
+The database contains the following tables:
+
+- `cinemahall` – stores cinema hall details
+- `screen` – stores screens belonging to cinema halls
+- `seat` – stores seats belonging to screens
+- `movie` – stores movie details
+- `show` – stores movie shows
+- `admin` – stores admin login details and assigned cinema hall
+- `user` – stores customer details
+- `booking` – stores booking information
+- `booking_seat` – connects bookings with selected seats
+
+### JDBC Connection
+
+Database connection is handled through a dedicated `DBConnection` class.
+
+Database credentials are stored using environment variables instead of hardcoding the password.
+
+```java
+private static final String URL =
+        "jdbc:postgresql://localhost:5432/cinebook";
+
+private static final String USER =
+        System.getenv("DB_USER");
+
+private static final String PASSWORD =
+        System.getenv("DB_PASSWORD");
+```
+
 ## Project Structure
 
 ```text
-src
-├── app
-│   └── Cine.java
+CineBook/
 │
-├── model
-│   ├── Booking.java
-│   ├── CinemaHall.java
-│   ├── Movie.java
-│   ├── Screen.java
-│   ├── Seat.java
-│   ├── Show.java
-│   └── User.java
+├── src/
+│   ├── DAO/
+│   │   └── CinemaHallDAO.java
+│   │
+│   ├── DB/
+│   │   └── DBConnection.java
+│   │
+│   ├── model/
+│   │   ├── Admin.java
+│   │   ├── Booking.java
+│   │   ├── CinemaHall.java
+│   │   ├── Movie.java
+│   │   ├── Screen.java
+│   │   ├── Seat.java
+│   │   ├── Show.java
+│   │   └── User.java
+│   │
+│   ├── service/
+│   │   ├── AdminManager.java
+│   │   ├── BookingManager.java
+│   │   ├── CinemaHallManager.java
+│   │   ├── MovieManager.java
+│   │   ├── ScreenManager.java
+│   │   ├── SeatBookingManager.java
+│   │   ├── SeatManager.java
+│   │   ├── ShowManager.java
+│   │   └── UserManager.java
+│   │
+│   └── Main.java
 │
-└── service
-    ├── BookingManager.java
-    ├── CinemaHallManager.java
-    ├── MovieManager.java
-    ├── ScreenManager.java
-    ├── SeatBookingManager.java
-    ├── SeatManager.java
-    ├── ShowManager.java
-    └── UserManager.java
+├── .gitignore
+├── README.md
 ```
 ## Application Flow
 
@@ -109,8 +164,32 @@ Show → List of Booked Seats
 ### Current Status
 
 ```markdown
-The customer-side booking flow is implemented using Core Java.
+CineBook is currently under development.
 ```
+
+### Completed
+- Core Java OOP-based cinema ticket booking system implemented
+- Customer registration and login
+- Cinema hall and screen management
+- Movie and show management
+- Seat management and seat availability
+- Seat selection and booking
+- Booking history
+- Admin login and admin operations
+- PostgreSQL database schema created
+- JDBC database connection configured
+- Database credentials configured using environment variables
+- Entity IDs added to Java models
+- CinemaHall DAO implemented
+- CinemaHallManager connected with CinemaHallDAO
+- Cinema hall data successfully retrieved from PostgreSQL
+
+### In Progress
+- Integrating the remaining Manager classes with PostgreSQL
+- Implementing remaining DAO classes
+- Connecting screens, seats, movies, shows, users, admins and bookings with the database
+- Testing complete database-backed application flow
+
 ## Future Improvements
 
 - Spring Boot backend
