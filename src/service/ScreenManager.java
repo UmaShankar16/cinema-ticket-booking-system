@@ -1,60 +1,34 @@
 package service;
 
+import DAO.ScreenDAO;
 import model.CinemaHall;
 import model.Screen;
 
+import java.util.ArrayList;
+
 public class ScreenManager {
+
+    private ScreenDAO screenDAO;
+    public ScreenManager()
+    {
+        screenDAO = new ScreenDAO();
+    }
 
     public boolean addScreen(CinemaHall hall,Screen screen)
     {
-        return hall.getScreen().add(screen);
+        return screenDAO.addScreen(hall,screen);
     }
 
     public boolean deleteScreen(CinemaHall hall,int screenNo)
     {
-        Screen foundScreen = null;
-        for(Screen screen : hall.getScreen())
-        {
-            if(screen.getScreenNo()==screenNo)
-            {
-                foundScreen=screen;
-                break;
-            }
-        }
-        if(foundScreen == null)
-        {
-            return false;
-        }
-        return hall.getScreen().remove(foundScreen);
+        return screenDAO.deleteScreen(hall, screenNo);
     }
-    public boolean updateScreen(CinemaHall hall,int oldScreenNo,int newScreenNo)
+    public boolean updateScreen(CinemaHall hall,int newScreenNo,int oldScreenNo)
     {
-        Screen foundScreen = null;
-        Screen newFound=null;
-        if(oldScreenNo==newScreenNo)
-        {
-            return false;
-        }
-        for(Screen screen : hall.getScreen())
-        {
-            if(screen.getScreenNo()==oldScreenNo)
-            {
-                foundScreen=screen;
-            }
-            if(screen.getScreenNo()==newScreenNo)
-            {
-                newFound=screen;
-            }
-        }
-        if(foundScreen == null)
-        {
-            return false;
-        }
-        if(newFound != null)
-        {
-            return false;
-        }
-        foundScreen.setScreenNo(newScreenNo);
-        return true;
+        return screenDAO.updateScreen(hall, newScreenNo, oldScreenNo);
+    }
+    public ArrayList<Screen> getAllScreenOfCinemaHall(CinemaHall hall)
+    {
+        return screenDAO.getAllScreenOfCinemaHall(hall);
     }
 }
