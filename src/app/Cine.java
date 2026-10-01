@@ -167,11 +167,11 @@ public class Cine {
 
         for (int i=1;i<=10;i++)
         {
-            seatManager.addSeat(inoxScreen1,new Seat("Standard","A",i));
+            seatManager.addSeat(inoxScreen1,new Seat("A",i,"Standard"));
         }
         for (int i=1;i<=10;i++)
         {
-            seatManager.addSeat(inoxScreen1,new Seat("Premium","B",i));
+            seatManager.addSeat(inoxScreen1,new Seat("B",i,"Premium"));
         }
         Movie movie = new Movie("Interstellar",
                 "Paramount Pictures",
@@ -602,7 +602,7 @@ public class Cine {
                             String row = String.valueOf((char)('A'+i));
                             for(int j=1;j<=n;j++)
                             {
-                                Seat seat = new Seat("Regular",row,j);
+                                Seat seat = new Seat(row,j,"Regular");
                                 screen.getSeats().add(seat);
                             }
                         }
@@ -677,7 +677,7 @@ public class Cine {
                         System.out.println("Enter seat No: ");
                         int num1 = sc.nextInt();
                         sc.nextLine();
-                        Seat seat = new Seat(type,row,num1);
+                        Seat seat = new Seat(row,num1,type);
                         if(seatManager.addSeat(selectedScreen,seat))
                         {
                             System.out.println("Added");

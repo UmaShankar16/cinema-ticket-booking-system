@@ -6,11 +6,11 @@ public class Seat {
     private String row;
     private int seatNo;
 
-    public Seat(String type,String row,int seatNo)
+    public Seat(String row,int seatNo,String type)
     {
-        this.type=type;
         this.row=row;
         this.seatNo=seatNo;
+        this.type=type;
     }
 
     public void setSeatId(int seatId) {

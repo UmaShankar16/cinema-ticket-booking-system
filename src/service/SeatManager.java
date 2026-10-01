@@ -1,9 +1,17 @@
 package service;
 
+import DAO.SeatDAO;
 import model.Screen;
 import model.Seat;
 
+import java.util.ArrayList;
+
 public class SeatManager {
+    private SeatDAO seatDAO;
+    public SeatManager()
+    {
+        seatDAO = new SeatDAO();
+    }
 
     public boolean addSeat(Screen screen, Seat seat)
     {
@@ -15,7 +23,7 @@ public class SeatManager {
                 return false;
             }
         }
-        return screen.getSeats().add(seat);
+        return seatDAO.addSeat(screen,seat);
     }
     public boolean deleteSeat(Screen screen,int seatNo,String seatRow)
     {
@@ -35,7 +43,7 @@ public class SeatManager {
         {
             return false;
         }
-        return screen.getSeats().remove(foundSeat);
+        return seatDAO.deleteSeat(screen,seatNo,seatRow);
     }
     public boolean updateSeatNumber(Screen screen,int oldSeatNo,int newSeatNo, String row)
     {
@@ -70,8 +78,7 @@ public class SeatManager {
         {
             return false;
         }
-        foundSeat.setSeatNo(newSeatNo);
-        return true;
+        return seatDAO.updateSeatNo(screen,oldSeatNo,newSeatNo,row);
     }
     public boolean updateSeatByRow(Screen screen,String oldSeatRow,String newSeatRow)
     {
@@ -86,7 +93,6 @@ public class SeatManager {
             if(seat.getRow().equalsIgnoreCase(oldSeatRow))
             {
                 foundSeat=seat;
-                break;
             }
             if(seat.getRow().equalsIgnoreCase(newSeatRow))
             {
@@ -101,10 +107,9 @@ public class SeatManager {
         {
             return false;
         }
-        foundSeat.setRow(newSeatRow);
-        return true;
+        return seatDAO.updateSeatRow(screen,oldSeatRow,newSeatRow);
     }
-    public boolean updateSeatByType(Screen screen,int SeatNo,String newType,String oldType, String row)
+    public boolean updateSeatByType(Screen screen,int seatNo,String newType,String oldType, String row)
     {
         Seat foundSeat=null;
         if(oldType.equalsIgnoreCase(newType))
@@ -113,7 +118,7 @@ public class SeatManager {
         }
         for(Seat seat: screen.getSeats())
         {
-            if(seat.getSeatNo()==SeatNo)
+            if(seat.getSeatNo()==seatNo)
             {
                 if(seat.getRow().equalsIgnoreCase(row))
                 {
@@ -127,7 +132,10 @@ public class SeatManager {
         {
             return false;
         }
-        foundSeat.setType(newType);
-        return true;
+        return seatDAO.updateSeatType(screen,seatNo,newType,oldType,row);
+    }
+    public ArrayList<Seat> getAllSeat(Screen screen)
+    {
+        return seatDAO.getAllSeat(screen);
     }
 }
