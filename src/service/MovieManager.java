@@ -1,5 +1,6 @@
 package service;
 
+import DAO.MovieDAO;
 import model.Movie;
 
 import java.time.Duration;
@@ -7,191 +8,80 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MovieManager {
-    private List<Movie> movies;
+    private MovieDAO movieDAO;
     public MovieManager()
     {
-        movies = new ArrayList<>();
+        movieDAO = new MovieDAO();
     }
 
     public boolean addMovie(Movie movie)
     {
-        return movies.add(movie);
+        return movieDAO.addMovie(movie);
     }
-
-    public boolean deleteMovie(String movieTitle)
+    public boolean deleteMovieById(int movieId)
     {
-        Movie foundMovie=null;
-        for(Movie movie:movies)
-        {
-            if(movie.getTitle().equalsIgnoreCase(movieTitle))
-            {
-                foundMovie=movie;
-                break;
-            }
-        }
-        if (foundMovie==null)
-        {
-            return false;
-        }
-        return movies.remove(foundMovie);
+        return movieDAO.deleteMovieById(movieId);
     }
-    public boolean updateMovieTitle(String newMovieTitle,String oldMovieTitle)
+    public boolean updateMovieTitle(int movieId,String newMovieTitle,String oldMovieTitle)
     {
-        Movie foundMovie=null;
         if(oldMovieTitle.equalsIgnoreCase(newMovieTitle))
         {
             return false;
         }
-        for(Movie movie : movies)
-        {
-            if(movie.getTitle().equalsIgnoreCase(oldMovieTitle))
-            {
-                foundMovie = movie;
-                break;
-            }
-        }
-        if(foundMovie==null)
-        {
-            return false;
-        }
-        foundMovie.setTitle(newMovieTitle);
-        return true;
+        return movieDAO.updateMovieTitle(movieId,newMovieTitle);
     }
-    public boolean updateMovieProductionHouse(String movieTitle,String newProductionHouse,String oldProductionHouse)
+    public boolean updateMovieProductionHouse(int movieId,String newProductionHouse,String oldProductionHouse)
     {
-        Movie foundMovie=null;
         if(oldProductionHouse.equalsIgnoreCase(newProductionHouse))
         {
             return false;
         }
-        for(Movie movie : movies)
-        {
-            if(movie.getTitle().equalsIgnoreCase(movieTitle))
-            {
-                foundMovie = movie;
-                break;
-            }
-        }
-        if(foundMovie==null)
-        {
-            return false;
-        }
-        foundMovie.setProductionHouse(newProductionHouse);
-        return true;
+        return movieDAO.updateMovieProductionHouse(movieId,newProductionHouse);
     }
-    public boolean updateMovieProducer(String movieTitle,String newProducer,String oldProducer)
+    public boolean updateMovieProducer(int movieId,String newProducer,String oldProducer)
     {
-        Movie foundMovie=null;
         if(oldProducer.equalsIgnoreCase(newProducer))
         {
             return false;
         }
-        for(Movie movie : movies)
-        {
-            if(movie.getTitle().equalsIgnoreCase(movieTitle))
-            {
-                foundMovie = movie;
-                break;
-            }
-        }
-        if(foundMovie==null)
-        {
-            return false;
-        }
-        foundMovie.setProducer(newProducer);
-        return true;
+        return movieDAO.updateMovieProducer(movieId,newProducer);
     }
-    public boolean updateMovieDirector(String movieTitle,String newDirector,String oldDirector)
+    public boolean updateMovieDirector(int movieId,String newDirector,String oldDirector)
     {
-        Movie foundMovie=null;
         if(oldDirector.equalsIgnoreCase(newDirector))
         {
             return false;
         }
-        for(Movie movie : movies)
-        {
-            if(movie.getTitle().equalsIgnoreCase(movieTitle))
-            {
-                foundMovie = movie;
-                break;
-            }
-        }
-        if(foundMovie==null)
-        {
-            return false;
-        }
-        foundMovie.setDirector(newDirector);
-        return true;
+        return movieDAO.updateMovieDirector(movieId,newDirector);
     }
-    public boolean updateMovieLanguage(String movieTitle,String oldLanguage,String newLanguage)
+    public boolean updateMovieLanguage(int movieId,String newLanguage,String oldLanguage)
     {
-        Movie foundMovie=null;
         if(oldLanguage.equalsIgnoreCase(newLanguage))
         {
             return false;
         }
-        for(Movie movie : movies)
-        {
-            if(movie.getTitle().equalsIgnoreCase(movieTitle))
-            {
-                foundMovie = movie;
-                break;
-            }
-        }
-        if(foundMovie==null)
-        {
-            return false;
-        }
-        foundMovie.setLanguage(newLanguage);
-        return true;
+        return movieDAO.updateMovieLanguage(movieId,newLanguage);
     }
-    public boolean updateMovieDuration(String movieTitle, Duration oldDuration, Duration newDuration)
+    public boolean updateMovieDuration(int movieId, Duration newDuration, Duration oldDuration)
     {
-        Movie foundMovie=null;
         if(oldDuration.equals(newDuration))
         {
             return false;
         }
-        for(Movie movie : movies)
-        {
-            if(movie.getTitle().equalsIgnoreCase(movieTitle))
-            {
-                foundMovie = movie;
-                break;
-            }
-        }
-        if(foundMovie==null)
-        {
-            return false;
-        }
-        foundMovie.setDuration(newDuration);
-        return true;
+        return movieDAO.updateMovieDuration(movieId,newDuration);
     }
-    public boolean updateMovieGenre(String movieTitle,String oldGenre,String newGenre)
+    public boolean updateMovieGenre(int movieId,String newGenre,String oldGenre)
     {
-        Movie foundMovie=null;
         if(oldGenre.equalsIgnoreCase(newGenre))
         {
             return false;
         }
-        for(Movie movie : movies)
-        {
-            if(movie.getTitle().equalsIgnoreCase(movieTitle))
-            {
-                foundMovie = movie;
-                break;
-            }
-        }
-        if(foundMovie==null)
-        {
-            return false;
-        }
-        foundMovie.setGenre(newGenre);
-        return true;
+        return movieDAO.updateMovieGenre(movieId,newGenre);
     }
     public Movie findMovie(String movieTitle)
     {
-        Movie foundMovie=null;
+        Movie foundMovie = null;
+        ArrayList<Movie> movies = new ArrayList<>();
         for(Movie movie:movies)
         {
             if(movie.getTitle().equalsIgnoreCase(movieTitle))
@@ -201,5 +91,13 @@ public class MovieManager {
             }
         }
         return foundMovie;
+    }
+    public ArrayList<Movie> searchMovieByTitle(String movieTitle)
+    {
+        return movieDAO.searchMovieByTitle(movieTitle);
+    }
+    public ArrayList<Movie> getAllMovies()
+    {
+        return movieDAO.getAllMovies();
     }
 }

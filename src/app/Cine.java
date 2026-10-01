@@ -428,12 +428,40 @@ public class Cine {
                         break;
                     case 2: System.out.println("Enter Movie Title: ");
                         String title = sc.nextLine();
-                        if(movieManager.deleteMovie(title))
+                        ArrayList<Movie> foundMovie = new ArrayList<>();
+                        foundMovie = movieManager.searchMovieByTitle(title);
+                        if (foundMovie.size()==0)
                         {
-                            System.out.println("Deleted Successfully");
+                            System.out.println("Movie not found");
                         }
-                        else{
-                            System.out.println("Not Found");
+                        else if(foundMovie.size()>1)
+                        {
+                            for(Movie movie1: foundMovie)
+                            {
+                                System.out.println("MovieId: "+movie1.getMovieId()+" | "+movie1.getTitle()+
+                                        " | "+movie1.getProductionHouse()+" | "+movie1.getProducer()+
+                                        " | "+movie1.getDirector()+" | "+movie1.getLanguage()+
+                                        " | "+movie1.getDuration()+" | "+movie1.getGenre());
+                            }
+                            System.out.println("Give the Id of the movie you want to delete: ");
+                            int n = sc.nextInt();
+                            if(movieManager.deleteMovieById(n))
+                            {
+                                System.out.println("Deleted Successfully");
+                            }
+                            else{
+                                System.out.println("Not Found");
+                            }
+                        }
+                        else {
+                            Movie movie1 = foundMovie.get(0);
+                            if(movieManager.deleteMovieById(movie1.getMovieId()))
+                            {
+                                System.out.println("Deleted Successfully");
+                            }
+                            else{
+                                System.out.println("Not Found");
+                            }
                         }
                         break;
                     case 3:System.out.println("1. Update Movie Title");
@@ -453,12 +481,40 @@ public class Cine {
                             String oldTitle = sc.nextLine();
                             System.out.println("Enter New Movie Title: ");
                             String newTitle = sc.nextLine();
-                            if(movieManager.updateMovieTitle(newTitle,oldTitle))
+                            ArrayList<Movie> foundMovie1 = movieManager.searchMovieByTitle(oldTitle);
+                            if (foundMovie1.size()==0)
                             {
-                                System.out.println("Updated");
+                                System.out.println("Movie not found");
                             }
-                            else{
-                                System.out.println("Not Updated");
+                            else if(foundMovie1.size()==1)
+                            {
+                                Movie movie1 = foundMovie1.getFirst();
+                                if(movieManager.updateMovieTitle(movie1.getMovieId(),newTitle,oldTitle))
+                                {
+                                    System.out.println("Updated Successfully");
+                                }
+                                else{
+                                    System.out.println("Not updated");
+                                }
+                            }
+                            else {
+                                for(Movie movie1: foundMovie1)
+                                {
+                                    System.out.println("MovieId: "+movie1.getMovieId()+" | "+movie1.getTitle()+
+                                            " | "+movie1.getProductionHouse()+" | "+movie1.getProducer()+
+                                            " | "+movie1.getDirector()+" | "+movie1.getLanguage()+
+                                            " | "+movie1.getDuration()+" | "+movie1.getGenre());
+                                }
+                                System.out.println("Multiple films found");
+                                System.out.println("Give the Id of the movie you want to delete: ");
+                                int n = sc.nextInt();
+                                if(movieManager.updateMovieTitle(n,newTitle,oldTitle))
+                                {
+                                    System.out.println("Updated Successfully");
+                                }
+                                else{
+                                    System.out.println("Not Updated");
+                                }
                             }
                         }
                         else if(select == 2)
@@ -469,12 +525,40 @@ public class Cine {
                             String newProdHsc = sc.nextLine();
                             System.out.println("Enter old Production House: ");
                             String oldProdHsc = sc.nextLine();
-                            if(movieManager.updateMovieProductionHouse(title1,newProdHsc,oldProdHsc))
+                            ArrayList<Movie> foundMovie1 = movieManager.searchMovieByTitle(title1);
+                            if (foundMovie1.size()==0)
                             {
-                                System.out.println("Updated");
+                                System.out.println("Movie not found");
                             }
-                            else{
-                                System.out.println("Not Updated");
+                            else if(foundMovie1.size()==1)
+                            {
+                                Movie movie1 = foundMovie1.getFirst();
+                                if(movieManager.updateMovieProductionHouse(movie1.getMovieId(),newProdHsc,oldProdHsc))
+                                {
+                                    System.out.println("Updated Successfully");
+                                }
+                                else{
+                                    System.out.println("Not updated");
+                                }
+                            }
+                            else {
+                                for(Movie movie1: foundMovie1)
+                                {
+                                    System.out.println("MovieId: "+movie1.getMovieId()+" | "+movie1.getTitle()+
+                                            " | "+movie1.getProductionHouse()+" | "+movie1.getProducer()+
+                                            " | "+movie1.getDirector()+" | "+movie1.getLanguage()+
+                                            " | "+movie1.getDuration()+" | "+movie1.getGenre());
+                                }
+                                System.out.println("Multiple films found");
+                                System.out.println("Give the Id of the movie you want to update: ");
+                                int n = sc.nextInt();
+                                if(movieManager.updateMovieProductionHouse(n,newProdHsc,oldProdHsc))
+                                {
+                                    System.out.println("Updated Successfully");
+                                }
+                                else{
+                                    System.out.println("Not Updated");
+                                }
                             }
                         }
                         else if(select == 3)
@@ -485,12 +569,40 @@ public class Cine {
                             String newProd = sc.nextLine();
                             System.out.println("Enter old Producer: ");
                             String oldProd = sc.nextLine();
-                            if(movieManager.updateMovieProducer(title2,newProd,oldProd))
+                            ArrayList<Movie> foundMovie1 = movieManager.searchMovieByTitle(title2);
+                            if (foundMovie1.size()==0)
                             {
-                                System.out.println("Updated");
+                                System.out.println("Movie not found");
                             }
-                            else{
-                                System.out.println("Not Updated");
+                            else if(foundMovie1.size()==1)
+                            {
+                                Movie movie1 = foundMovie1.getFirst();
+                                if(movieManager.updateMovieProducer(movie1.getMovieId(),newProd,oldProd))
+                                {
+                                    System.out.println("Updated Successfully");
+                                }
+                                else{
+                                    System.out.println("Not updated");
+                                }
+                            }
+                            else {
+                                for(Movie movie1: foundMovie1)
+                                {
+                                    System.out.println("MovieId: "+movie1.getMovieId()+" | "+movie1.getTitle()+
+                                            " | "+movie1.getProductionHouse()+" | "+movie1.getProducer()+
+                                            " | "+movie1.getDirector()+" | "+movie1.getLanguage()+
+                                            " | "+movie1.getDuration()+" | "+movie1.getGenre());
+                                }
+                                System.out.println("Multiple films found");
+                                System.out.println("Give the Id of the movie you want to update: ");
+                                int n = sc.nextInt();
+                                if(movieManager.updateMovieProducer(n,newProd,oldProd))
+                                {
+                                    System.out.println("Updated Successfully");
+                                }
+                                else{
+                                    System.out.println("Not Updated");
+                                }
                             }
                         }
                         else if(select == 4)
@@ -501,12 +613,40 @@ public class Cine {
                             String newDirector = sc.nextLine();
                             System.out.println("Enter old director: ");
                             String oldDirector = sc.nextLine();
-                            if(movieManager.updateMovieDirector(title3,newDirector,oldDirector))
+                            ArrayList<Movie> foundMovie1 = movieManager.searchMovieByTitle(title3);
+                            if (foundMovie1.size()==0)
                             {
-                                System.out.println("Updated");
+                                System.out.println("Movie not found");
                             }
-                            else{
-                                System.out.println("Not Updated");
+                            else if(foundMovie1.size()==1)
+                            {
+                                Movie movie1 = foundMovie1.getFirst();
+                                if(movieManager.updateMovieDirector(movie1.getMovieId(),newDirector,oldDirector))
+                                {
+                                    System.out.println("Updated Successfully");
+                                }
+                                else{
+                                    System.out.println("Not updated");
+                                }
+                            }
+                            else {
+                                for(Movie movie1: foundMovie1)
+                                {
+                                    System.out.println("MovieId: "+movie1.getMovieId()+" | "+movie1.getTitle()+
+                                            " | "+movie1.getProductionHouse()+" | "+movie1.getProducer()+
+                                            " | "+movie1.getDirector()+" | "+movie1.getLanguage()+
+                                            " | "+movie1.getDuration()+" | "+movie1.getGenre());
+                                }
+                                System.out.println("Multiple films found");
+                                System.out.println("Give the Id of the movie you want to update: ");
+                                int n = sc.nextInt();
+                                if(movieManager.updateMovieDirector(n,newDirector,oldDirector))
+                                {
+                                    System.out.println("Updated Successfully");
+                                }
+                                else{
+                                    System.out.println("Not Updated");
+                                }
                             }
                         }
                         else if(select == 5)
@@ -517,12 +657,40 @@ public class Cine {
                             String newLang = sc.nextLine();
                             System.out.println("Enter old Language: ");
                             String oldLang = sc.nextLine();
-                            if(movieManager.updateMovieLanguage(title4,newLang,oldLang))
+                            ArrayList<Movie> foundMovie1 = movieManager.searchMovieByTitle(title4);
+                            if (foundMovie1.size()==0)
                             {
-                                System.out.println("Updated");
+                                System.out.println("Movie not found");
                             }
-                            else{
-                                System.out.println("Not Updated");
+                            else if(foundMovie1.size()==1)
+                            {
+                                Movie movie1 = foundMovie1.getFirst();
+                                if(movieManager.updateMovieLanguage(movie1.getMovieId(),newLang,oldLang))
+                                {
+                                    System.out.println("Updated Successfully");
+                                }
+                                else{
+                                    System.out.println("Not updated");
+                                }
+                            }
+                            else {
+                                for(Movie movie1: foundMovie1)
+                                {
+                                    System.out.println("MovieId: "+movie1.getMovieId()+" | "+movie1.getTitle()+
+                                            " | "+movie1.getProductionHouse()+" | "+movie1.getProducer()+
+                                            " | "+movie1.getDirector()+" | "+movie1.getLanguage()+
+                                            " | "+movie1.getDuration()+" | "+movie1.getGenre());
+                                }
+                                System.out.println("Multiple films found");
+                                System.out.println("Give the Id of the movie you want to update: ");
+                                int n = sc.nextInt();
+                                if(movieManager.updateMovieLanguage(n,newLang,oldLang))
+                                {
+                                    System.out.println("Updated Successfully");
+                                }
+                                else{
+                                    System.out.println("Not Updated");
+                                }
                             }
                         }
                         else if(select == 6)
@@ -541,12 +709,40 @@ public class Cine {
                             long minutes1 = sc.nextLong();
                             sc.nextLine();
                             Duration duration2 = Duration.ofHours(hours1).plusMinutes(minutes1);
-                            if(movieManager.updateMovieDuration(title5,duration1,duration2))
+                            ArrayList<Movie> foundMovie1 = movieManager.searchMovieByTitle(title5);
+                            if (foundMovie1.size()==0)
                             {
-                                System.out.println("Updated");
+                                System.out.println("Movie not found");
                             }
-                            else{
-                                System.out.println("Not Updated");
+                            else if(foundMovie1.size()==1)
+                            {
+                                Movie movie1 = foundMovie1.getFirst();
+                                if(movieManager.updateMovieDuration(movie1.getMovieId(),duration2,duration1))
+                                {
+                                    System.out.println("Updated Successfully");
+                                }
+                                else{
+                                    System.out.println("Not updated");
+                                }
+                            }
+                            else {
+                                for(Movie movie1: foundMovie1)
+                                {
+                                    System.out.println("MovieId: "+movie1.getMovieId()+" | "+movie1.getTitle()+
+                                            " | "+movie1.getProductionHouse()+" | "+movie1.getProducer()+
+                                            " | "+movie1.getDirector()+" | "+movie1.getLanguage()+
+                                            " | "+movie1.getDuration()+" | "+movie1.getGenre());
+                                }
+                                System.out.println("Multiple films found");
+                                System.out.println("Give the Id of the movie you want to update: ");
+                                int n = sc.nextInt();
+                                if(movieManager.updateMovieDuration(n,duration2,duration1))
+                                {
+                                    System.out.println("Updated Successfully");
+                                }
+                                else{
+                                    System.out.println("Not Updated");
+                                }
                             }
                         }
                         else if(select == 7)
@@ -557,12 +753,40 @@ public class Cine {
                             String newGenre = sc.nextLine();
                             System.out.println("Enter old Genre: ");
                             String oldGenre = sc.nextLine();
-                            if(movieManager.updateMovieGenre(title6,oldGenre,newGenre))
+                            ArrayList<Movie> foundMovie1 = movieManager.searchMovieByTitle(title6);
+                            if (foundMovie1.size()==0)
                             {
-                                System.out.println("Updated");
+                                System.out.println("Movie not found");
                             }
-                            else{
-                                System.out.println("Not Updated");
+                            else if(foundMovie1.size()==1)
+                            {
+                                Movie movie1 = foundMovie1.getFirst();
+                                if(movieManager.updateMovieGenre(movie1.getMovieId(),newGenre,oldGenre))
+                                {
+                                    System.out.println("Updated Successfully");
+                                }
+                                else{
+                                    System.out.println("Not updated");
+                                }
+                            }
+                            else {
+                                for(Movie movie1: foundMovie1)
+                                {
+                                    System.out.println("MovieId: "+movie1.getMovieId()+" | "+movie1.getTitle()+
+                                            " | "+movie1.getProductionHouse()+" | "+movie1.getProducer()+
+                                            " | "+movie1.getDirector()+" | "+movie1.getLanguage()+
+                                            " | "+movie1.getDuration()+" | "+movie1.getGenre());
+                                }
+                                System.out.println("Multiple films found");
+                                System.out.println("Give the Id of the movie you want to update: ");
+                                int n = sc.nextInt();
+                                if(movieManager.updateMovieGenre(n,newGenre,oldGenre))
+                                {
+                                    System.out.println("Updated Successfully");
+                                }
+                                else{
+                                    System.out.println("Not Updated");
+                                }
                             }
                         }
                         else if(select == 8)
