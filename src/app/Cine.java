@@ -1,4 +1,4 @@
-package app;
+/*package app;
 
 import model.*;
 import service.*;
@@ -25,13 +25,6 @@ public class Cine {
         BookingManager bookingManager = new BookingManager();
         UserManager userManager = new UserManager();
         AdminManager adminManager = new AdminManager();
-        loadSampleData(
-                cinemaHallManager,
-                screenManager,
-                seatManager,
-                showManager,
-                movieManager
-        );
 
         while(true)
         {
@@ -144,47 +137,6 @@ public class Cine {
             }
         }
     }
-    private static void loadSampleData(
-            CinemaHallManager cinemaHallManager,
-            ScreenManager screenManager,
-            SeatManager seatManager,
-            ShowManager showManager,
-            MovieManager movieManager)
-    {
-        CinemaHall inoxCuttack = new CinemaHall("Inox","Cuttack");
-        CinemaHall pvrCuttack = new CinemaHall("PVR","Cuttack");
-
-        cinemaHallManager.addCinemaHall(inoxCuttack);
-        cinemaHallManager.addCinemaHall(pvrCuttack);
-
-        Screen inoxScreen1 = new Screen(1);
-        Screen inoxScreen2 = new Screen(2);
-        Screen pvrScreen1 = new Screen(1);
-
-        screenManager.addScreen(inoxCuttack,inoxScreen1);
-        screenManager.addScreen(inoxCuttack,inoxScreen2);
-        screenManager.addScreen(pvrCuttack,pvrScreen1);
-
-        for (int i=1;i<=10;i++)
-        {
-            seatManager.addSeat(inoxScreen1,new Seat("A",i,"Standard"));
-        }
-        for (int i=1;i<=10;i++)
-        {
-            seatManager.addSeat(inoxScreen1,new Seat("B",i,"Premium"));
-        }
-        Movie movie = new Movie("Interstellar",
-                "Paramount Pictures",
-                "Ema Thomas",
-                "Christopher Nolan","English",
-                Duration.ofMinutes(169),
-                "Sci-fi");
-        movieManager.addMovie(movie);
-
-        Show show = new Show(movie.getTitle(),LocalDate.of(2026,9,10),
-                LocalTime.of(18,0));
-        showManager.addShow(inoxScreen1,show);
-    }
     private static void customerMenu(
             Scanner sc,
             CinemaHallManager cinemaHallManager,
@@ -244,7 +196,7 @@ public class Cine {
                     for(int i=0;i<selectedScreen.getShows().size();i++)
                     {
                         Show show = selectedScreen.getShows().get(i);
-                        System.out.println((i+1)+"."+show.getMovie()+" | "+show.getDate()
+                        System.out.println((i+1)+"."+show.getMovieId()+" | "+show.getDate()
                         +" | "+show.getStartTime());
                     }
                     System.out.println("Enter your choice: ");
@@ -342,7 +294,7 @@ public class Cine {
                         for(Booking booking1: userBooking)
                         {
                             System.out.println("======= Your Booking =======");
-                            System.out.println("Movie: "+booking1.getShow().getMovie());
+                            System.out.println("Movie: "+booking1.getShow().getMovieId());
                             System.out.println("Date: "+booking1.getShow().getDate());
                             System.out.println("Time: "+booking1.getShow().getStartTime());
                             System.out.println("Screen: "+booking1.getScreen().getScreenNo());
@@ -1007,11 +959,30 @@ public class Cine {
                 {
                     case 1: System.out.println("Enter movie title: ");
                         String movieTitle = sc.nextLine();
-                        Movie title = movieManager.findMovie(movieTitle);
-                        if(title == null)
+                        ArrayList<Movie> title = movieManager.searchMovieByTitle(movieTitle);
+                        if(title.isEmpty())
                         {
                             System.out.println("Movie not found");
                             break;
+                        }
+                        int movieId;
+                        if(title.size() == 1)
+                        {
+                            movieId = title.get(0).getMovieId();
+                        }
+                        else
+                        {
+                            for(Movie movie1: title)
+                            {
+                                System.out.println("MovieId: "+movie1.getMovieId()+" | "+movie1.getTitle()+
+                                        " | "+movie1.getProductionHouse()+" | "+movie1.getProducer()+
+                                        " | "+movie1.getDirector()+" | "+movie1.getLanguage()+
+                                        " | "+movie1.getDuration()+" | "+movie1.getGenre());
+                            }
+                            System.out.println("Multiple films found");
+                            System.out.println("Give the Id of the movie you want to add for show: ");
+                            movieId = sc.nextInt();
+                            sc.nextLine();
                         }
                         System.out.println("Enter show date(in dd-MM-yy): ");
                         String userInput = sc.nextLine();
@@ -1034,7 +1005,7 @@ public class Cine {
                         catch(DateTimeParseException e){
                             System.out.println("Invalid format");
                         }
-                        Show show = new Show(movieTitle,date,time);
+                        Show show = new Show(movieId,date,time);
                         if(showManager.addShow(selectedScreen,show))
                         {
                             System.out.println("Added Successfully");
@@ -1045,11 +1016,30 @@ public class Cine {
                         break;
                     case 2: System.out.println("Enter movie title: ");
                         String movie = sc.nextLine();
-                        Movie film = movieManager.findMovie(movie);
-                        if(film == null)
+                        ArrayList<Movie> film = movieManager.searchMovieByTitle(movie);
+                        if(film.isEmpty())
                         {
                             System.out.println("Movie not found");
                             break;
+                        }
+                        int movieId1;
+                        if(film.size() == 1)
+                        {
+                            movieId1 = film.get(0).getMovieId();
+                        }
+                        else
+                        {
+                            for(Movie movie1: film)
+                            {
+                                System.out.println("MovieId: "+movie1.getMovieId()+" | "+movie1.getTitle()+
+                                        " | "+movie1.getProductionHouse()+" | "+movie1.getProducer()+
+                                        " | "+movie1.getDirector()+" | "+movie1.getLanguage()+
+                                        " | "+movie1.getDuration()+" | "+movie1.getGenre());
+                            }
+                            System.out.println("Multiple films found");
+                            System.out.println("Give the Id of the movie you want to delete from show: ");
+                            movieId1 = sc.nextInt();
+                            sc.nextLine();
                         }
                         System.out.println("Enter show date(in dd-MM-yy): ");
                         String userInput1 = sc.nextLine();
@@ -1072,7 +1062,8 @@ public class Cine {
                         catch(DateTimeParseException e){
                             System.out.println("Invalid format");
                         }
-                        if(showManager.deleteShow(selectedScreen,movie,date1,time1))
+                        Show show1 = new Show(movieId1,date1,time1);
+                        if(showManager.deleteShow(selectedScreen,show1))
                         {
                             System.out.println("Deleted");
                         }
@@ -1249,3 +1240,4 @@ public class Cine {
         }
     }
 }
+*/

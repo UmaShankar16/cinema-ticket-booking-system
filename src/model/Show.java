@@ -5,15 +5,25 @@ import java.time.LocalTime;
 
 public class Show {
     private int showId;
-    private String movie;
+    private int movieId;
+    private int screenId;
     private LocalDate date;
     private LocalTime startTime;
 
-    public Show(String movie,LocalDate date,LocalTime startTime)
+    public Show(int movieId,int screenId,LocalDate date,LocalTime startTime)
     {
-        this.movie=movie;
+        this.screenId = screenId;
+        this.movieId=movieId;
         this.date=date;
         this.startTime=startTime;
+    }
+
+    public void setScreenId(int screenId) {
+        this.screenId = screenId;
+    }
+
+    public int getScreenId() {
+        return screenId;
     }
 
     public void setShowId(int showId) {
@@ -24,12 +34,12 @@ public class Show {
         return showId;
     }
 
-    public void setMovie(String movie) {
-        this.movie = movie;
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
     }
 
-    public String getMovie() {
-        return movie;
+    public int getMovieId() {
+        return movieId;
     }
 
     public void setDate(LocalDate date) {

@@ -1,123 +1,64 @@
 package service;
 
+import DAO.ShowDAO;
 import model.Screen;
 import model.Show;
+import model.Movie;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class ShowManager {
 
+    private ShowDAO showDAO;
+    public ShowManager()
+    {
+        showDAO = new ShowDAO();
+    }
+
     public boolean addShow(Screen screen, Show show)
     {
-        return screen.getShows().add(show);
+        return showDAO.addShow(screen,show);
     }
-    public boolean deleteShow(Screen screen, String movieTitle, LocalDate date, LocalTime time)
+    public boolean deleteShow(Screen screen,Show show)
     {
-        Show foundShow=null;
-        for(Show show: screen.getShows())
-        {
-            if(show.getMovie().equalsIgnoreCase(movieTitle))
-            {
-                if(show.getDate().equals(date))
-                {
-                    if(show.getStartTime().equals(time))
-                    {
-                        foundShow=show;
-                        break;
-                    }
-                }
-            }
-        }
-        if(foundShow==null)
-        {
-            return false;
-        }
-        screen.getShows().remove(foundShow);
-        return true;
+        return showDAO.deleteShow(screen,show);
     }
-    public boolean updateShowMovie(Screen screen,String oldMovieTitle,String newMovieTitle,LocalDate date,LocalTime time)
+    public boolean updateShowDate(Screen screen,Show show,LocalDate newDate)
     {
-        Show foundShow=null;
-        if(oldMovieTitle.equalsIgnoreCase(newMovieTitle))
+        if(show.getDate().equals(newDate))
         {
             return false;
         }
-        for(Show show: screen.getShows())
-        {
-            if(show.getMovie().equalsIgnoreCase(oldMovieTitle))
-            {
-                if (show.getDate().equals(date))
-                {
-                    if(show.getStartTime().equals(time))
-                    {
-                        foundShow=show;
-                        break;
-                    }
-                }
-            }
-        }
-        if(foundShow==null)
-        {
-            return false;
-        }
-        foundShow.setMovie(newMovieTitle);
-        return true;
+        return showDAO.updateShowDate(screen,show,newDate);
     }
-    public boolean updateShowDate(Screen screen,String movieTitle,LocalDate newDate,LocalDate oldDate,LocalTime time)
+    public boolean updateShowTime(Screen screen,Show show,LocalTime newTime)
     {
-        Show foundShow=null;
-        if(oldDate.equals(newDate))
+        if(show.getStartTime().equals(newTime))
         {
             return false;
         }
-        for(Show show: screen.getShows())
-        {
-            if(show.getDate().equals(oldDate))
-            {
-                if (show.getMovie().equalsIgnoreCase(movieTitle))
-                {
-                    if(show.getStartTime().equals(time))
-                    {
-                        foundShow=show;
-                        break;
-                    }
-                }
-            }
-        }
-        if(foundShow==null)
-        {
-            return false;
-        }
-        foundShow.setDate(newDate);
-        return true;
+        return showDAO.updateShowTime(screen,show,newTime);
     }
-    public boolean updateShowTime(Screen screen,String movieTitle,LocalTime newTime,LocalDate date,LocalTime oldTime)
+    public ArrayList<Show> getAllShowsByScreen(Screen screen)
     {
-        Show foundShow=null;
-        if(oldTime.equals(newTime))
-        {
-            return false;
-        }
-        for(Show show: screen.getShows())
-        {
-            if(show.getStartTime().equals(oldTime))
-            {
-                if (show.getDate().equals(date))
-                {
-                    if(show.getMovie().equalsIgnoreCase(movieTitle))
-                    {
-                        foundShow=show;
-                        break;
-                    }
-                }
-            }
-        }
-        if(foundShow==null)
-        {
-            return false;
-        }
-        foundShow.setStartTime(newTime);
-        return true;
+        ArrayList<Show> foundShows = showDAO.getAllShowsByScreen(screen);
+        return foundShows;
+    }
+    public ArrayList<Show> getAllShowsByMovie(Movie movie)
+    {
+        ArrayList<Show> foundShows = showDAO.getAllShowsByMovie(movie);
+        return foundShows;
+    }
+    public ArrayList<Show> getAllShowsByDate(LocalDate date)
+    {
+        ArrayList<Show> foundShows = showDAO.getAllShowsByDate(date);
+        return foundShows;
+    }
+    public ArrayList<Show> getAllShows()
+    {
+        ArrayList<Show> foundShows = showDAO.getAllShows();
+        return foundShows;
     }
 }

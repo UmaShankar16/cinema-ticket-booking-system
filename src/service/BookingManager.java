@@ -26,7 +26,6 @@ public class BookingManager {
         }
         return false;
     }
-
     public List<Booking> getBookings(User user) {
         List<Booking> foundBooking = new ArrayList<>();
         for(Booking booking : bookings)
