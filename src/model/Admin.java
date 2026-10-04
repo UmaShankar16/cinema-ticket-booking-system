@@ -2,47 +2,38 @@ package model;
 
 public class Admin {
     private int adminId;
-    private String cinemaHallName;
-    private String cinemaHallLocation;
+    private String adminUserName;
+    private int hallId;
     private String password;
 
-    public Admin(String cinemaHallName, String cinemaHallLocation,
-                 String password)
+    public Admin(String adminUserName,String password)
     {
-        this.cinemaHallName = cinemaHallName;
-        this.cinemaHallLocation = cinemaHallLocation;
+        this.adminUserName = adminUserName;
         this.password = password;
     }
 
     public void setAdminId(int adminId) {
         this.adminId = adminId;
     }
-
     public int getAdminId() {
         return adminId;
     }
-
-    public String getCinemaHallName() {
-        return cinemaHallName;
+    public void setAdminUserName(String adminUserName) {
+        this.adminUserName = adminUserName;
     }
-
-    public void setCinemaHallName(String cinemaHallName) {
-        this.cinemaHallName = cinemaHallName;
+    public String getAdminUserName() {
+        return adminUserName;
     }
-
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public String getCinemaHallLocation() {
-        return cinemaHallLocation;
+    public void setHallId(int hallId) {
+        this.hallId = hallId;
     }
-
-    public void setCinemaHallLocation(String cinemaHallLocation) {
-        this.cinemaHallLocation = cinemaHallLocation;
+    public int getHallId() {
+        return hallId;
     }
 }

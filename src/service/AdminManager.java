@@ -1,44 +1,63 @@
 package service;
 
+import DAO.AdminDAO;
 import model.Admin;
-
-import java.util.ArrayList;
-import java.util.List;
+import model.CinemaHall;
 
 public class AdminManager {
-    private List<Admin> admins;
-
+    private AdminDAO adminDAO;
     public AdminManager()
     {
-        admins = new ArrayList<>();
+        adminDAO = new AdminDAO();
     }
 
-    public boolean addAdmin(Admin admin)
+    public boolean addAdmin(CinemaHall hall,Admin admin)
     {
-        for(Admin admin1 : admins)
-        {
-            if(admin1.getCinemaHallName().equalsIgnoreCase(admin.getCinemaHallName()) &&
-            admin1.getCinemaHallLocation().equalsIgnoreCase(admin.getCinemaHallLocation()) &&
-            admin1.getPassword().equals(admin.getPassword()))
-            {
-                return false;
-            }
-        }
-        admins.add(admin);
-        return true;
+        return adminDAO.addAdmin(hall,admin);
     }
-
     public boolean loginAdmin(Admin admin)
     {
-        for(Admin admin1 : admins)
+        Admin selectedAdmin = adminDAO.findAdminByUserName(admin.getAdminUserName());
+        if(selectedAdmin == null)
         {
-            if(admin1.getCinemaHallName().equalsIgnoreCase(admin.getCinemaHallName())&&
-            admin1.getCinemaHallLocation().equalsIgnoreCase(admin.getCinemaHallLocation())&&
-            admin1.getPassword().equals(admin.getPassword()))
-            {
-                return true;
-            }
+            return false;
+        }
+        if(admin.getPassword().equals(selectedAdmin.getPassword()))
+        {
+            return true;
         }
         return false;
+    }
+    public boolean updateAdminUserName(Admin admin,String newUserName)
+    {
+        if(admin.getAdminUserName().equals(newUserName))
+        {
+            return false;
+        }
+
+        boolean updated = adminDAO.updateAdminUserName(admin,newUserName);
+
+        if(updated)
+        {
+            admin.setAdminUserName(newUserName);
+        }
+
+        return updated;
+    }
+    public boolean updateAdminPassword(Admin admin,String newPassword)
+    {
+        if(admin.getPassword().equals(newPassword))
+        {
+            return false;
+        }
+
+        boolean updated = adminDAO.updateAdminPassword(admin,newPassword);
+
+        if(updated)
+        {
+            admin.setPassword(newPassword);
+        }
+
+        return updated;
     }
 }
