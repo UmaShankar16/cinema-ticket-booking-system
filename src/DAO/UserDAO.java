@@ -2,20 +2,17 @@ package DAO;
 
 import DB.DBConnection;
 import model.Admin;
-import model.CinemaHall;
+import model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
-public class AdminDAO {
-    public boolean addAdmin(CinemaHall hall, Admin admin)
+public class UserDAO {
+    public boolean addUser(User user)
     {
         String sql = """
-                INSERT INTO admin
-                (admin_username,admin_password,hall_id)
-                VALUES (?,?,?)
+                INSERT INTO "user"
+                (user_name,user_phone)
+                VALUES (?,?)
                 """;
         try(
                 Connection connection = DBConnection.getConnection();
@@ -23,18 +20,16 @@ public class AdminDAO {
                         PreparedStatement.RETURN_GENERATED_KEYS);
                 )
         {
-            statement.setString(1, admin.getAdminUserName());
-            statement.setString(2, admin.getPassword());
-            statement.setInt(3,hall.getHallId());
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getPhone());
 
             statement.executeUpdate();
-
             try(ResultSet resultSet = statement.getGeneratedKeys())
             {
-                if(resultSet.next())
+                if (resultSet.next())
                 {
-                    int adminId = resultSet.getInt("admin_id");
-                    admin.setAdminId(adminId);
+                    int userId = resultSet.getInt("user_id");
+                    user.setUserId(userId);
                 }
             }
             return true;
@@ -45,33 +40,31 @@ public class AdminDAO {
             return false;
         }
     }
-    public Admin findAdminByUserName(String userName)
+    public User findUserByPhone(String phoneNo)
     {
-        Admin foundAdmin=null;
+        User foundUser=null;
         String sql = """
-                SELECT admin_id,admin_username,admin_password,hall_id
-                FROM admin
-                WHERE admin_username = ?
+                SELECT user_id,user_name,user_phone
+                FROM "user"
+                WHERE user_phone = ?
                 """;
         try(
                 Connection connection = DBConnection.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
-                )
+        )
         {
-            statement.setString(1,userName);
+            statement.setString(1,phoneNo);
 
             try(ResultSet resultSet = statement.executeQuery())
             {
                 if (resultSet.next())
                 {
-                    int adminId = resultSet.getInt("admin_id");
-                    String userName1 = resultSet.getString("admin_username");
-                    String password = resultSet.getString("admin_password");
-                    int hallId = resultSet.getInt("hall_id");
+                    int userId = resultSet.getInt("user_id");
+                    String userName = resultSet.getString("user_name");
+                    String phone = resultSet.getString("user_phone");
 
-                    foundAdmin = new Admin(userName1,password);
-                    foundAdmin.setAdminId(adminId);
-                    foundAdmin.setHallId(hallId);
+                    foundUser = new User(userName,phone);
+                    foundUser.setUserId(userId);
                 }
             }
         }
@@ -79,22 +72,22 @@ public class AdminDAO {
         {
             e.printStackTrace();
         }
-        return foundAdmin;
+        return foundUser;
     }
-    public boolean updateAdminUserName(Admin admin,String newUserName)
+    public boolean updateUserName(User user,String newName)
     {
         String sql= """
-                UPDATE admin
-                SET admin_username = ?
-                WHERE admin_id=?
+                UPDATE "user"
+                SET user_name = ?
+                WHERE user_id=?
                 """;
         try(
                 Connection connection = DBConnection.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
-                )
+        )
         {
-            statement.setString(1,newUserName);
-            statement.setInt(2,admin.getAdminId());
+            statement.setString(1,newName);
+            statement.setInt(2,user.getUserId());
 
             int rowsAffected = statement.executeUpdate();
             return rowsAffected>0;
@@ -105,20 +98,20 @@ public class AdminDAO {
             return false;
         }
     }
-    public boolean updateAdminPassword(Admin admin,String newPassword)
+    public boolean updateUserPhoneNo(User user, String newPhone)
     {
         String sql= """
-                UPDATE admin
-                SET admin_password = ?
-                WHERE admin_id=?
+                UPDATE "user"
+                SET user_phone = ?
+                WHERE user_id=?
                 """;
         try(
                 Connection connection = DBConnection.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);
         )
         {
-            statement.setString(1,newPassword);
-            statement.setInt(2,admin.getAdminId());
+            statement.setString(1,newPhone);
+            statement.setInt(2, user.getUserId());
 
             int rowsAffected = statement.executeUpdate();
             return rowsAffected>0;

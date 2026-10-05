@@ -1,38 +1,56 @@
 package service;
 
+import DAO.UserDAO;
 import model.User;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class UserManager {
-    private List<User> users;
+    UserDAO userDAO;
     public UserManager()
     {
-        users = new ArrayList<>();
+        userDAO = new UserDAO();
     }
+
     public boolean registerUser(User user)
     {
-        for(User user1 : users)
-        {
-            if(user1.getPhone().equals(user.getPhone()))
-            {
-                return false;
-            }
-        }
-        return users.add(user);
+        return userDAO.addUser(user);
     }
-    public User loginUser(String phone)
+    public boolean loginUser(String phone)
     {
-        User foundUser = null;
-        for(User user : users)
+        User foundUser = userDAO.findUserByPhone(phone);
+        if(foundUser == null)
         {
-            if(user.getPhone().equals(phone))
-            {
-                foundUser = user;
-                break;
-            }
+            return false;
         }
-        return foundUser;
+        return true;
+    }
+    public boolean updateUserName(User user,String newUsername)
+    {
+        if(user.getName().equals(newUsername))
+        {
+            return false;
+        }
+        boolean updated = userDAO.updateUserName(user,newUsername);
+
+        if(updated)
+        {
+            user.setName(newUsername);
+        }
+
+        return updated;
+    }
+    public boolean updateUserPhoneNo(User user,String newPhoneNo)
+    {
+        if(user.getPhone().equals(newPhoneNo))
+        {
+            return false;
+        }
+        boolean updated = userDAO.updateUserPhoneNo(user,newPhoneNo);
+
+        if(updated)
+        {
+            user.setPhone(newPhoneNo);
+        }
+
+        return updated;
     }
 }
