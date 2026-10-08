@@ -6,15 +6,13 @@ import java.util.List;
 public class Booking {
     private int bookingId;
     private User user;
-    private Screen screen;
     private Show show;
     private List<Seat> seats;
 
-    public Booking(User user,Show show,Screen screen,List<Seat> seats)
+    public Booking(User user,Show show,List<Seat> seats)
     {
         this.user=user;
         this.show=show;
-        this.screen=screen;
         this.seats = seats;
     }
 
@@ -32,14 +30,6 @@ public class Booking {
 
     public User getUser() {
         return user;
-    }
-
-    public void setScreen(Screen screen) {
-        this.screen = screen;
-    }
-
-    public Screen getScreen() {
-        return screen;
     }
 
     public void setShow(Show show) {

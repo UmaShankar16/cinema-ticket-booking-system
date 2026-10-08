@@ -1,45 +1,32 @@
 package service;
 
+import DAO.BookingDAO;
 import model.Booking;
-import model.Seat;
 import model.Show;
 import model.User;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class BookingManager {
-    private List<Booking> bookings;
-    private SeatBookingManager seatBookingManager;
+    private BookingDAO bookingDAO;
 
-    public BookingManager()
-    {
-        bookings=new ArrayList<>();
-        seatBookingManager = new SeatBookingManager();
+    public BookingManager(){
+        bookingDAO = new BookingDAO();
     }
 
-    public boolean addBooking(Booking booking)
-    {
-        if(seatBookingManager.bookSeats(booking.getShow(),booking.getSeats()))
-        {
-            return bookings.add(booking);
-        }
-        return false;
+    public boolean addBooking(Booking booking){
+        return bookingDAO.addBooking(booking);
     }
-    public List<Booking> getBookings(User user) {
-        List<Booking> foundBooking = new ArrayList<>();
-        for(Booking booking : bookings)
-        {
-            if(booking.getUser().getName().equalsIgnoreCase(user.getName())
-            && booking.getUser().getPhone().equals(user.getPhone()))
-            {
-                foundBooking.add(booking);
-            }
-        }
-        return foundBooking;
+    public List<Booking> getBookingsByUser(User user) {
+        return bookingDAO.getBookingsByUser(user);
     }
-    public List<Seat> getBookedSeats(Show show)
+    public Set<Integer> getBookedSeatIdsByShow(int showId)
     {
-        return seatBookingManager.getBookedSeats(show);
+        return bookingDAO.getBookedSeatIdsByShow(showId);
+    }
+    public List<Booking> getBookingsByShow(Show show)
+    {
+        return bookingDAO.getBookingByShow(show.getShowId());
     }
 }

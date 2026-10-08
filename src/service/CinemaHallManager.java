@@ -27,11 +27,29 @@ public class CinemaHallManager {
     }
     public boolean updateCinemaHallLocation(CinemaHall hall,String newLocation)
     {
-        return cinemaHallDAO.updateCinemaHallLocation(hall,newLocation);
+        if(hall.getLocation().equalsIgnoreCase(newLocation))
+        {
+            return false;
+        }
+        boolean updated = cinemaHallDAO.updateCinemaHallLocation(hall,newLocation);
+        if(updated)
+        {
+            hall.setLocation(newLocation);
+        }
+        return updated;
     }
     public boolean updateCinemaHallName(CinemaHall hall,String newName)
     {
-        return cinemaHallDAO.updateCinemaHallName(hall,newName);
+        if(hall.getCinemaHallName().equalsIgnoreCase(newName))
+        {
+            return false;
+        }
+        boolean updated = cinemaHallDAO.updateCinemaHallName(hall,newName);
+        if(updated)
+        {
+            hall.setCinemaHallName(newName);
+        }
+        return updated;
     }
     public List<CinemaHall> searchByHallName(String hallName)
     {

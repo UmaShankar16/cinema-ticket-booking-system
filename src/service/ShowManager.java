@@ -31,7 +31,12 @@ public class ShowManager {
         {
             return false;
         }
-        return showDAO.updateShowDate(screen,show,newDate);
+        boolean updated = showDAO.updateShowDate(screen,show,newDate);
+        if(updated)
+        {
+            show.setDate(newDate);
+        }
+        return updated;
     }
     public boolean updateShowTime(Screen screen,Show show,LocalTime newTime)
     {
@@ -39,7 +44,12 @@ public class ShowManager {
         {
             return false;
         }
-        return showDAO.updateShowTime(screen,show,newTime);
+        boolean updated = showDAO.updateShowTime(screen,show,newTime);
+        if(updated)
+        {
+            show.setStartTime(newTime);
+        }
+        return updated;
     }
     public ArrayList<Show> getAllShowsByScreen(Screen screen)
     {

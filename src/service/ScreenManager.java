@@ -25,7 +25,16 @@ public class ScreenManager {
     }
     public boolean updateScreen(CinemaHall hall,int newScreenNo,int oldScreenNo)
     {
-        return screenDAO.updateScreen(hall, newScreenNo, oldScreenNo);
+        if(newScreenNo == oldScreenNo)
+        {
+            return false;
+        }
+        boolean updated = screenDAO.updateScreen(hall, newScreenNo, oldScreenNo);
+        /*if(updated)
+        {
+            hall.setLocation(newLocation);
+        }*/
+        return updated;
     }
     public ArrayList<Screen> getAllScreenOfCinemaHall(CinemaHall hall)
     {
