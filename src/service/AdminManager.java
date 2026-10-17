@@ -24,6 +24,8 @@ public class AdminManager {
         }
         if(admin.getPassword().equals(selectedAdmin.getPassword()))
         {
+            admin.setAdminId(selectedAdmin.getAdminId());
+            admin.setHallId(selectedAdmin.getHallId());
             return true;
         }
         return false;

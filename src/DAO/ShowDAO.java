@@ -14,7 +14,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class ShowDAO {
-    public boolean addShow(Screen screen, Show show)
+    public boolean addShow(Show show)
     {
         String sql = """
                 INSERT INTO show
@@ -30,7 +30,7 @@ public class ShowDAO {
             statement.setInt(1,show.getMovieId());
             statement.setDate(2,java.sql.Date.valueOf(show.getDate()));
             statement.setTime(3,java.sql.Time.valueOf(show.getStartTime()));
-            statement.setInt(4,screen.getScreenId());
+            statement.setInt(4,show.getScreenId());
 
             statement.executeUpdate();
             try(ResultSet resultSet = statement.getGeneratedKeys())
@@ -49,7 +49,7 @@ public class ShowDAO {
             return false;
         }
     }
-    public boolean deleteShow(Screen screen,Show show)
+    public boolean deleteShow(Show show)
     {
         String sql = """
                 DELETE FROM show
@@ -64,7 +64,7 @@ public class ShowDAO {
                 PreparedStatement statement = connection.prepareStatement(sql);
                 )
         {
-            statement.setInt(1,screen.getScreenId());
+            statement.setInt(1, show.getScreenId());
             statement.setInt(2,show.getMovieId());
             statement.setInt(3,show.getShowId());
             statement.setDate(4,java.sql.Date.valueOf(show.getDate()));
@@ -79,7 +79,7 @@ public class ShowDAO {
             return false;
         }
     }
-    public boolean updateShowDate(Screen screen, Show show, LocalDate newDate)
+    public boolean updateShowDate(Show show, LocalDate newDate)
     {
         String sql = """
                 UPDATE show
@@ -96,7 +96,7 @@ public class ShowDAO {
                 )
         {
             statement.setDate(1,java.sql.Date.valueOf(newDate));
-            statement.setInt(2,screen.getScreenId());
+            statement.setInt(2,show.getScreenId());
             statement.setInt(3,show.getShowId());
             statement.setInt(4,show.getMovieId());
             statement.setDate(5,java.sql.Date.valueOf(show.getDate()));
@@ -111,7 +111,7 @@ public class ShowDAO {
             return false;
         }
     }
-    public boolean updateShowTime(Screen screen, Show show, LocalTime newTime)
+    public boolean updateShowTime(Show show, LocalTime newTime)
     {
         String sql = """
                 UPDATE show
@@ -128,7 +128,7 @@ public class ShowDAO {
         )
         {
             statement.setTime(1,java.sql.Time.valueOf(newTime));
-            statement.setInt(2,screen.getScreenId());
+            statement.setInt(2,show.getScreenId());
             statement.setInt(3,show.getShowId());
             statement.setInt(4,show.getMovieId());
             statement.setDate(5,java.sql.Date.valueOf(show.getDate()));

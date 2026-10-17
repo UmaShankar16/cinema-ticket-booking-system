@@ -14,14 +14,9 @@ public class UserManager {
     {
         return userDAO.addUser(user);
     }
-    public boolean loginUser(String phone)
+    public User loginUser(String phone)
     {
-        User foundUser = userDAO.findUserByPhone(phone);
-        if(foundUser == null)
-        {
-            return false;
-        }
-        return true;
+        return userDAO.findUserByPhone(phone);
     }
     public boolean updateUserName(User user,String newUsername)
     {

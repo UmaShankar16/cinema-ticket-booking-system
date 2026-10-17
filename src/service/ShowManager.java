@@ -17,34 +17,34 @@ public class ShowManager {
         showDAO = new ShowDAO();
     }
 
-    public boolean addShow(Screen screen, Show show)
+    public boolean addShow(Show show)
     {
-        return showDAO.addShow(screen,show);
+        return showDAO.addShow(show);
     }
-    public boolean deleteShow(Screen screen,Show show)
+    public boolean deleteShow(Show show)
     {
-        return showDAO.deleteShow(screen,show);
+        return showDAO.deleteShow(show);
     }
-    public boolean updateShowDate(Screen screen,Show show,LocalDate newDate)
+    public boolean updateShowDate(Show show,LocalDate newDate)
     {
         if(show.getDate().equals(newDate))
         {
             return false;
         }
-        boolean updated = showDAO.updateShowDate(screen,show,newDate);
+        boolean updated = showDAO.updateShowDate(show,newDate);
         if(updated)
         {
             show.setDate(newDate);
         }
         return updated;
     }
-    public boolean updateShowTime(Screen screen,Show show,LocalTime newTime)
+    public boolean updateShowTime(Show show,LocalTime newTime)
     {
         if(show.getStartTime().equals(newTime))
         {
             return false;
         }
-        boolean updated = showDAO.updateShowTime(screen,show,newTime);
+        boolean updated = showDAO.updateShowTime(show,newTime);
         if(updated)
         {
             show.setStartTime(newTime);

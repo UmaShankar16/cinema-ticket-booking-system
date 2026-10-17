@@ -78,20 +78,6 @@ public class MovieManager {
         }
         return movieDAO.updateMovieGenre(movieId,newGenre);
     }
-    public Movie findMovie(String movieTitle)
-    {
-        Movie foundMovie = null;
-        ArrayList<Movie> movies = new ArrayList<>();
-        for(Movie movie:movies)
-        {
-            if(movie.getTitle().equalsIgnoreCase(movieTitle))
-            {
-                foundMovie = movie;
-                break;
-            }
-        }
-        return foundMovie;
-    }
     public ArrayList<Movie> searchMovieByTitle(String movieTitle)
     {
         return movieDAO.searchMovieByTitle(movieTitle);

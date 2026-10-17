@@ -19,22 +19,17 @@ public class ScreenManager {
         return screenDAO.addScreen(hall,screen);
     }
 
-    public boolean deleteScreen(CinemaHall hall,int screenNo)
+    public boolean deleteScreen(CinemaHall hall,Screen screen)
     {
-        return screenDAO.deleteScreen(hall, screenNo);
+        return screenDAO.deleteScreen(hall, screen);
     }
-    public boolean updateScreen(CinemaHall hall,int newScreenNo,int oldScreenNo)
+    public boolean updateScreen(CinemaHall hall,Screen screen,int newScreenNo)
     {
-        if(newScreenNo == oldScreenNo)
+        if(newScreenNo == screen.getScreenNo())
         {
             return false;
         }
-        boolean updated = screenDAO.updateScreen(hall, newScreenNo, oldScreenNo);
-        /*if(updated)
-        {
-            hall.setLocation(newLocation);
-        }*/
-        return updated;
+        return screenDAO.updateScreen(hall,screen,newScreenNo);
     }
     public ArrayList<Screen> getAllScreenOfCinemaHall(CinemaHall hall)
     {

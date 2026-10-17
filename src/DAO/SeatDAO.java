@@ -37,11 +37,12 @@ public class SeatDAO {
             return false;
         }
     }
-    public boolean deleteSeat(Screen screen,int seatNo,String seatRow)
+    public boolean deleteSeat(Screen screen,Seat seat)
     {
         String sql = """
                 DELETE FROM seat
                 WHERE screen_id = ?
+                AND seat_id = ?
                 AND seat_row = ?
                 AND seat_no = ?
                 """;
@@ -51,8 +52,9 @@ public class SeatDAO {
                 )
         {
             statement.setInt(1,screen.getScreenId());
-            statement.setString(2,seatRow);
-            statement.setInt(3,seatNo);
+            statement.setInt(2, seat.getSeatId());
+            statement.setString(3, seat.getRow());
+            statement.setInt(4,seat.getSeatNo());
 
             int rowsAffected = statement.executeUpdate();
             return rowsAffected>0;
@@ -63,12 +65,13 @@ public class SeatDAO {
             return false;
         }
     }
-    public boolean updateSeatNo(Screen screen,int oldSeatNo,int newSeatNo, String row)
+    public boolean updateSeatNo(Screen screen,Seat seat,int newSeatNo)
     {
         String sql = """
                 UPDATE seat
                 SET seat_no = ?
                 WHERE screen_id = ?
+                AND seat_id = ?
                 AND seat_no = ?
                 AND seat_row = ?
                 """;
@@ -79,8 +82,9 @@ public class SeatDAO {
         {
             statement.setInt(1,newSeatNo);
             statement.setInt(2,screen.getScreenId());
-            statement.setInt(3,oldSeatNo);
-            statement.setString(4,row);
+            statement.setInt(3,seat.getSeatId());
+            statement.setInt(4,seat.getSeatNo());
+            statement.setString(5, seat.getRow());
 
             int rowsAffected = statement.executeUpdate();
             return rowsAffected>0;
@@ -91,12 +95,13 @@ public class SeatDAO {
             return false;
         }
     }
-    public boolean updateSeatRow(Screen screen,String oldSeatRow,String newSeatRow)
+    public boolean updateSeatRow(Screen screen,Seat seat,String newSeatRow)
     {
         String sql = """
                 UPDATE seat
                 SET seat_row = ?
                 WHERE screen_id = ?
+                AND seat_id = ?
                 AND seat_row = ?
                 """;
         try (
@@ -105,7 +110,8 @@ public class SeatDAO {
         ) {
             statement.setString(1,newSeatRow);
             statement.setInt(2, screen.getScreenId());
-            statement.setString(3,oldSeatRow);
+            statement.setInt(3, seat.getSeatId());
+            statement.setString(4,seat.getRow());
 
             int rowsAffected = statement.executeUpdate();
             return rowsAffected > 0;
@@ -114,12 +120,13 @@ public class SeatDAO {
             return false;
         }
     }
-    public boolean updateSeatType(Screen screen,int seatNo,String newType,String oldType, String row)
+    public boolean updateSeatType(Screen screen,Seat seat,String newType)
     {
         String sql = """
                 UPDATE seat
                 SET seat_type = ?
                 WHERE screen_id = ?
+                AND seat_id = ?
                 AND seat_no = ?
                 AND seat_row = ?
                 AND seat_type = ?
@@ -130,9 +137,10 @@ public class SeatDAO {
         ) {
             statement.setString(1, newType);
             statement.setInt(2, screen.getScreenId());
-            statement.setInt(3, seatNo);
-            statement.setString(4, row);
-            statement.setString(5,oldType);
+            statement.setInt(3, seat.getSeatId());
+            statement.setInt(4, seat.getSeatNo());
+            statement.setString(5, seat.getRow());
+            statement.setString(6, seat.getType());
 
             int rowsAffected = statement.executeUpdate();
             return rowsAffected > 0;
