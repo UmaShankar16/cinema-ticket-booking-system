@@ -90,7 +90,14 @@ CineBook/
 │
 ├── src/
 │   ├── DAO/
-│   │   └── CinemaHallDAO.java
+│   │   ├── AdminDAO.java
+│   │   ├── BookingDAO.java
+│   │   ├── CinemaHallDAO.java
+│   │   ├── MovieDAO.java
+│   │   ├── ScreenDAO.java
+│   │   ├── SeatDAO.java
+│   │   ├── ShowDAO.java
+│   │   └── UserDAO.java
 │   │
 │   ├── DB/
 │   │   └── DBConnection.java
@@ -183,11 +190,9 @@ CineBook is currently under development.
 - CinemaHall DAO implemented
 - CinemaHallManager connected with CinemaHallDAO
 - Cinema hall data successfully retrieved from PostgreSQL
-
-### In Progress
-- Integrating the remaining Manager classes with PostgreSQL
-- Implementing remaining DAO classes
-- Connecting screens, seats, movies, shows, users, admins and bookings with the database
+- Integrated the remaining Manager classes with PostgreSQL
+- Implemented remaining DAO classes
+- screens, seats, movies, shows, users, admins and bookings with the database are connected
 - Testing complete database-backed application flow
 
 ## Future Improvements
