@@ -32,6 +32,28 @@ public class ScreenDAO {
             connection = DBConnection.getConnection();
             connection.setAutoCommit(false);
 
+            String checksql = """
+                SELECT 1 FROM
+                screen
+                WHERE screen_no=?
+                AND hall_id = ?
+                """;
+
+            try(PreparedStatement checkStatement = connection.prepareStatement(checksql))
+            {
+                checkStatement.setInt(1,screen.getScreenNo());
+                checkStatement.setInt(2,hall.getHallId());
+
+                try(ResultSet resultSet = checkStatement.executeQuery())
+                {
+                    if(resultSet.next())
+                    {
+                        connection.rollback();
+                        return false;
+                    }
+                }
+            }
+
             try (PreparedStatement screenStatement =
                          connection.prepareStatement(
                                  screenSql,

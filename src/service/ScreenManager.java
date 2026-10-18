@@ -18,7 +18,6 @@ public class ScreenManager {
     {
         return screenDAO.addScreen(hall,screen);
     }
-
     public boolean deleteScreen(CinemaHall hall,Screen screen)
     {
         return screenDAO.deleteScreen(hall, screen);
